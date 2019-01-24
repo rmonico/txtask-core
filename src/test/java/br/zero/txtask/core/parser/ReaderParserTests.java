@@ -8,6 +8,7 @@ import java.io.StringReader;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ReaderParserTests {
 
@@ -25,5 +26,11 @@ public class ReaderParserTests {
         TaskList list = parser.parse();
 
         assertThat(list.getTitle(), is("List title"));
+        assertTrue(list.getTasks().isEmpty());
+    }
+
+    @Test
+    public void should_parse_list_and_its_tasks() {
+
     }
 }
