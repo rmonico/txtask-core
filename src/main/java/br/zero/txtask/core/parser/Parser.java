@@ -1,11 +1,9 @@
 package br.zero.txtask.core.parser;
 
-import br.zero.txtask.core.model.Task;
-
-import java.util.List;
+import br.zero.txtask.core.model.TaskList;
 
 public interface Parser {
 
-    List<Task> parse() throws ParserException;
+    TaskList parse() throws ParserException;
 
 }
