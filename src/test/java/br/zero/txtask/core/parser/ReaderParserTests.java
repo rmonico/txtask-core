@@ -63,7 +63,8 @@ public class ReaderParserTests {
         assertThat(list, taskCount(is(2)));
         assertThat(list, task(0).title(is("Task with no tags")));
         assertThat(list, task(1).title(is("Another task")));
-        assertThat(list, task(1).tagCount(is(1)));
+        assertThat(list, task(1).tagCount(is(2)));
         assertThat(list, task(1).tag(0).name(is("this_time_with_1_tag.dots_and_numb3rs_are_allowed_too")));
+        assertThat(list, task(1).tag(1).name(is("another_tag")));
     }
 }
