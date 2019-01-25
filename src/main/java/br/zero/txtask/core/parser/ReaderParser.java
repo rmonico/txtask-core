@@ -7,10 +7,24 @@ import br.zero.txtask.core.model.TaskList;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static java.lang.String.format;
 
 public class ReaderParser implements Parser {
 
-    private final BufferedReader reader;
+    private static final String TASK_LIST_TITLE_PREFIX_REGEX = "^:: .+$";
+    private static final String TASK_STATUS_REGEX = "[-x]";
+    private static final String TASK_PREFIX_REGEX = format("%s ", TASK_STATUS_REGEX);
+    private static final String TASK_NAME_REGEX = "(?<tagname>[a-z_][a-z0-9_\\.]*)";
+    private static final String TAG_REGEX = format(" #%s", TASK_NAME_REGEX);
+    private static final String TASK_TITLE_REGEX = format("^%s(?<tasktitle>[^#]+)(%s)*$", TASK_PREFIX_REGEX, TAG_REGEX);
+
+    private static final Pattern TAG_PATTERN = Pattern.compile(TAG_REGEX);
+    private static final Pattern TASK_TITLE_PATTERN = Pattern.compile(TASK_TITLE_REGEX);
+
+    private BufferedReader reader;
 
     public ReaderParser(Reader r) {
         reader = new BufferedReader(r);
@@ -31,12 +45,6 @@ public class ReaderParser implements Parser {
 
                 line = reader.readLine();
             }
-
-            if (taskList.getTasks().size() > 1 && taskList.getTasks().get(1).getTitle().startsWith("Another task")) {
-                taskList.getTasks().get(1).setTitle("Another task");
-                taskList.getTasks().get(1).getTags().add(new Tag());
-                taskList.getTasks().get(1).getTags().get(0).setName("this_time_with_1_tag.dots_and_numb3rs_are_allowed_too");
-            }
         } catch (IOException e) {
             throw new ParserException(e);
         }
@@ -45,13 +53,28 @@ public class ReaderParser implements Parser {
     }
 
     private void doParse(TaskList taskList, String line) {
-        if (line.matches("^:: .+$"))
+        if (line.matches(TASK_LIST_TITLE_PREFIX_REGEX))
             taskList.setTitle(line.substring(3));
-        else if (line.matches("^[-x] .+$")) {
-            String title = line.substring(2);
-
+        else if (line.matches("^" + TASK_PREFIX_REGEX + ".+$")) {
             Task task = new Task();
-            task.setTitle(title);
+
+            Matcher match = TAG_PATTERN.matcher(line);
+
+            while (match.find()) {
+                String tagName = match.group("tagname");
+
+                Tag tag = new Tag();
+                tag.setName(tagName);
+
+                task.getTags().add(tag);
+            }
+
+            match = TASK_TITLE_PATTERN.matcher(line);
+
+            // TODO Check if == 0
+            match.find();
+
+            task.setTitle(match.group("tasktitle"));
 
             taskList.getTasks().add(task);
         }
