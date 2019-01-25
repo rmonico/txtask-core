@@ -19,22 +19,6 @@ public class TagMatchers {
     }
 
 
-//    protected abstract class TaskFeatureMatcher<U> extends FeatureMatcher<TaskList, U> {
-//
-//        public TaskFeatureMatcher(Matcher<U> subMatcher, String featureName) {
-//            super(subMatcher, format("%s of task %s", featureName, toStrWithOrdinal(TaskMatchers.this.itemIndex)), format("task's %s" , featureName));
-//        }
-//
-//        @Override
-//        protected U featureValueOf(TaskList actual) {
-//            return this.featureOfTask(actual.getTasks().get(TaskMatchers.this.itemIndex));
-//
-//        }
-//
-//        protected abstract U featureOfTask(Task task);
-//    }
-//
-
     protected static abstract class TagFeatureMatcher<U> extends TaskFeatureMatcher<U> {
         private int tagIndex;
 
