@@ -27,12 +27,8 @@ public class TaskMatchers {
 
         @Override
         protected U featureValueOf(TaskList actual) {
-            return this.featureOfTask(getTask(actual));
+            return this.featureOfTask(actual.getTasks().get(this.taskIndex));
 
-        }
-
-        protected Task getTask(TaskList actual) {
-            return actual.getTasks().get(this.taskIndex);
         }
 
         protected abstract U featureOfTask(Task task);
