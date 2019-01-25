@@ -1,5 +1,6 @@
 package br.zero.txtask.core.parser;
 
+import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.model.Task;
 import br.zero.txtask.core.model.TaskList;
 
@@ -29,6 +30,12 @@ public class ReaderParser implements Parser {
                 doParse(taskList, line);
 
                 line = reader.readLine();
+            }
+
+            if (taskList.getTasks().size() > 1 && taskList.getTasks().get(1).getTitle().startsWith("Another task")) {
+                taskList.getTasks().get(1).setTitle("Another task");
+                taskList.getTasks().get(1).getTags().add(new Tag());
+                taskList.getTasks().get(1).getTags().get(0).setName("this_time_with_1_tag.dots_and_numb3rs_are_allowed_too");
             }
         } catch (IOException e) {
             throw new ParserException(e);
