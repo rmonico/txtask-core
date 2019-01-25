@@ -1,0 +1,47 @@
+:: TXTask roadmap
+
+&&version: =1 of '0.1', '0.2', 'future', 'discussion', make tags
+&&component: =1 of 'syntax_definition', 'parser', 'cli', 'android', 'sublime_syntax', 'lint', make tags
+
+##parser ##v0.1
+x List title
+  - Just on first line #restriction #future
+  - Comments of list #future
+x Task title
+  x Without sharp char #restriction #future
+  ; This char: #
+x Task tag
+  x Allow regex "[a-z_][a-z0-9_\.]*" #restriction #future
+- Implicit tags
+- Subtasks
+- Long comments
+  - Indented on subtasks #restriction #future
+  - Append when consecutive comments are found #future
+- Short comments
+  - Indented on subtasks #restriction #future
+  - Append when consecutive comments are found #future
+- Task status
+- Tags with value
+; Initially will allow any value
+
+##parser ##future
+- Property definitions #restriction #future #hard
+  - Not completed defined yet
+  - Comments on properties
+  - Properties on external files
+  - A default properties file for a folder
+    - And its subfolders?
+  - Force property definitions be on a separated file?
+
+- Internacionalization of tag names
+; Dont known if its a good idea....
+
+##parser ##discussion
+- Will be allowed not defined tags?
+  - With default of "no value"
+
+- Should tags have more than one value?
+- 
+
+##linter ##discussion
+- Not started yet, low priority

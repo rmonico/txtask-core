@@ -1,0 +1,127 @@
+:: The list title
+;;
+List comment, may have a single line comment with ; on line begin
+;;
+
+&&a_tag: no value
+; Tag definitions can have comments too
+; This defines a that cant have any value
+; The only possible way to apply this tag is #a_tag
+
+&&text_tag: any
+;;
+A tag that can receive a arbitrary text sequence as its value, this is the default for not defined tags
+Those values cant have other chars than a-z 0-9 "." "_" "/"
+
+ex: #text_tag:value_.other_value/
+;;
+
+&&place: =1 of 'home', 'work', 'market'
+;;
+A tag which can have a limited set of values
+
+ex: #place:home
+;;
+
+&&places: >=1 of &place
+;;
+Definitions can be reused with &
+
+#places            ->  not ok
+#places:home       ->  ok
+#places:home,work  ->  ok
+;;
+
+&&dificuldade: int, 1 to 5
+; ex: #dificuldade:1
+
+&&hard: #dificuldade:5
+; #hard is a tag alias
+
+&&due: date
+;;
+Dates must be some of formats:
+d/mmm
+d/mmm/y
+
+ex:
+#due:1/jan
+#due:1/jan/19
+#due:1/jan/2019
+;;
+
+&&scheduled: period
+;;
+Peridos come in format:
+&date-&date
+#scheduled:1/jan-31/dec
+;;
+
+&&file: file[, at '<relative or absolute path>']
+; Future
+
+&&dir: folder[, at '<relative or absolute path>']
+; Future
+
+&&http: url
+; Future
+
+&&https: url
+; Future
+
+&&valor: regex, '[0-9]+,[0-9]{2}'
+; Future
+
+&&custo: '$' regex, '^' &valor '$'
+; Future
+
+&&saldo: '$' regex '^\-?' &valor '$'
+; Future
+
+&&version: =1 of 'v0.1', 'v0.2', 'future', make tags
+;;
+The 'make tags' literal defines a tag for each value of set
+Valid just when using =1
+
+After this
+
+#future
+
+will mark the task with #version:future implicitly
+;;
+
+- Task #preco:45,99
+
+- Task title
+
+x Done task
+
+- Title #tag
+
+- Title #tag:value
+
+- Title #tag:value #another:another_value
+;;
+Long comment
+;;
+
+- Title
+; Short comment
+
+- Parent task
+  - Sub task
+  ; Long comment of sub task
+  - Another subtask
+  ; Short comment of another subtask
+
+##some_tag
+##these_constructs_may_be_nested
+
+- Task with 2 implicit tags (some_tag, these_constructs_may_be_nested)
+
+==some_tag
+; Stop appling some_tag implicitly
+
+- Task with 1 implicit tag (these_constructs_may_be_nested)
+
+; ==these_constructs_may_be_nested dont have to be closed
