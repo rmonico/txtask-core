@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 
-import static br.zero.txtask.core.matchers.TaskListAssertions.*;
+import static br.zero.txtask.core.matchers.TaskListMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,7 +29,7 @@ public class ReaderParserTests {
 
         TaskList list = parser.parse();
 
-        assertThat(list, listTitle(is("List title")));
+        assertThat(list, title(is("List title")));
     }
 
     @Test
@@ -44,9 +44,9 @@ public class ReaderParserTests {
 
         TaskList list = parser.parse();
 
-        assertThat(list, listTitle(is("A simple task list")));
+        assertThat(list, title(is("A simple task list")));
 
-        assertThat(list, size(is(3)));
+        assertThat(list, taskCount(is(3)));
         assertThat(list, task(0).title(is("First task")));
         assertThat(list, task(1).title(is("Second task")));
         assertThat(list, task(2).title(is("Third task")));
