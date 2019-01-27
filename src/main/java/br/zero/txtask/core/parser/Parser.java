@@ -1,11 +1,11 @@
 package br.zero.txtask.core.parser;
 
-import br.zero.txtask.core.model.TaskList;
+import br.zero.txtask.core.model.Element;
 
 import java.io.Reader;
 
-public interface Parser {
+public interface Parser<E extends Element> {
 
-    TaskList parse(Reader source) throws ParserException;
+    E parse(Reader source) throws ParserException;
 
 }
