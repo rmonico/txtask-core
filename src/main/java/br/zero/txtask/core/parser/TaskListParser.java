@@ -24,14 +24,10 @@ public class TaskListParser implements Parser {
     private static final Pattern TAG_PATTERN = Pattern.compile(TAG_REGEX);
     private static final Pattern TASK_TITLE_PATTERN = Pattern.compile(TASK_TITLE_REGEX);
 
-    private BufferedReader reader;
-
-    public TaskListParser(Reader r) {
-        reader = new BufferedReader(r);
-    }
-
     @Override
-    public TaskList parse() throws ParserException {
+    public TaskList parse(Reader source) throws ParserException {
+        BufferedReader reader = new BufferedReader(source);
+
         TaskList taskList = new TaskList();
 
         try {
