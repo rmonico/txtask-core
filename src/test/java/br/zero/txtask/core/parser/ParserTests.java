@@ -18,16 +18,16 @@ public class ParserTests {
 
     @Test
     public void should_not_parse_a_empty_buffer() {
-        Parser parser = new TaskListParser(new StringReader(""));
+        TaskListParser parser = new TaskListParser();
 
-        assertThrows(ParserException.class, parser::parse, "Reader is empty");
+        assertThrows(ParserException.class, () -> parser.parse(new StringReader("")), "Reader is empty");
     }
 
     @Test
     public void should_parse_list_title() throws ParserException {
-        Parser parser = new TaskListParser(new StringReader(":: List title"));
+        TaskListParser parser = new TaskListParser();
 
-        TaskList list = parser.parse();
+        TaskList list = parser.parse(new StringReader(":: List title"));
 
         assertThat(list, title(is("List title")));
     }
@@ -40,9 +40,9 @@ public class ParserTests {
 
     @Test
     public void should_parse_list_title_and_its_tasks() throws IOException, ParserException {
-        Parser parser = new TaskListParser(new FileReader("src/test/resources/should_parse_list_title_and_its_tasks.txk"));
+        TaskListParser parser = new TaskListParser();
 
-        TaskList list = parser.parse();
+        TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_list_title_and_its_tasks.txk"));
 
         assertThat(list, title(is("A simple task list")));
 
@@ -54,9 +54,9 @@ public class ParserTests {
 
     @Test
     public void should_parse_task_tags() throws FileNotFoundException, ParserException {
-        Parser parser = new TaskListParser(new FileReader("src/test/resources/should_parse_task_tags.txk"));
+        TaskListParser parser = new TaskListParser();
 
-        TaskList list = parser.parse();
+        TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_task_tags.txk"));
 
         assertThat(list, title(is("A list to test tags on tasks")));
 
