@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 import static java.lang.String.format;
 
-public class ReaderParser implements Parser {
+public class TaskListParser implements Parser {
 
     private static final String TASK_LIST_TITLE_PREFIX_REGEX = "^:: .+$";
     private static final String TASK_STATUS_REGEX = "[-x]";
@@ -26,7 +26,7 @@ public class ReaderParser implements Parser {
 
     private BufferedReader reader;
 
-    public ReaderParser(Reader r) {
+    public TaskListParser(Reader r) {
         reader = new BufferedReader(r);
     }
 

@@ -14,18 +14,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ReaderParserTests {
+public class ParserTests {
 
     @Test
     public void should_not_parse_a_empty_buffer() {
-        Parser parser = new ReaderParser(new StringReader(""));
+        Parser parser = new TaskListParser(new StringReader(""));
 
         assertThrows(ParserException.class, parser::parse, "Reader is empty");
     }
 
     @Test
     public void should_parse_list_title() throws ParserException {
-        Parser parser = new ReaderParser(new StringReader(":: List title"));
+        Parser parser = new TaskListParser(new StringReader(":: List title"));
 
         TaskList list = parser.parse();
 
@@ -40,7 +40,7 @@ public class ReaderParserTests {
 
     @Test
     public void should_parse_list_title_and_its_tasks() throws IOException, ParserException {
-        Parser parser = new ReaderParser(new FileReader("src/test/resources/should_parse_list_title_and_its_tasks.txk"));
+        Parser parser = new TaskListParser(new FileReader("src/test/resources/should_parse_list_title_and_its_tasks.txk"));
 
         TaskList list = parser.parse();
 
@@ -54,7 +54,7 @@ public class ReaderParserTests {
 
     @Test
     public void should_parse_task_tags() throws FileNotFoundException, ParserException {
-        Parser parser = new ReaderParser(new FileReader("src/test/resources/should_parse_task_tags.txk"));
+        Parser parser = new TaskListParser(new FileReader("src/test/resources/should_parse_task_tags.txk"));
 
         TaskList list = parser.parse();
 
