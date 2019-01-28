@@ -1,5 +1,7 @@
 package br.zero.txtask.core.parser;
 
+import static java.util.Arrays.asList;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +29,8 @@ class ParserReaderGetter {
         return this.untilValues;
     }
 
-    public ParserReaderGetter until(String value) {
-        untilValues().add(value);
+    public ParserReaderGetter until(String... values) {
+        untilValues().addAll(asList(values));
 
         return this;
     }
