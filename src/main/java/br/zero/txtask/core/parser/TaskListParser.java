@@ -74,6 +74,10 @@ public class TaskListParser implements Parser<TaskList> {
                 }
             } else if (reader.followed().byEol().go()) {
                 reader.consume().next(1).go();
+            } else {
+                String nextToken = reader.consume().until(" ").or().eol().go();
+
+                throw new ParserException("Invalid token: '%s'", nextToken);
             }
         }
 
