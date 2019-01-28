@@ -38,12 +38,6 @@ public class ParserTests {
     }
 
     @Test
-    @Disabled("Future")
-    public void should_not_have_more_than_one_title_per_reader() {
-
-    }
-
-    @Test
     public void should_parse_list_title_and_its_tasks() throws IOException, ParserException {
         TaskListParser parser = new TaskListParser();
 
