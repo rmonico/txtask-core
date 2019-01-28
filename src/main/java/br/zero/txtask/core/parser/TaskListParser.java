@@ -1,16 +1,11 @@
 package br.zero.txtask.core.parser;
 
+import java.io.IOException;
+import java.io.Reader;
+
 import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.model.Task;
 import br.zero.txtask.core.model.TaskList;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static java.lang.String.format;
 
 public class TaskListParser implements Parser<TaskList> {
 
