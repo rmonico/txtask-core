@@ -19,7 +19,6 @@ public class TagMatchers {
         this.tagIndex = tagIndex;
     }
 
-
     protected static abstract class TagFeatureMatcher<U> extends TaskFeatureMatcher<U> {
         private int tagIndex;
 

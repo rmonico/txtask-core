@@ -45,7 +45,6 @@ public class TaskMatchers {
         };
     }
 
-
     public Matcher<TaskList> tagCount(Matcher<Integer> tagCountMatcher) {
         return new TaskFeatureMatcher<Integer>(tagCountMatcher, "tag count", this.itemIndex) {
 

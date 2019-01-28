@@ -8,14 +8,14 @@ public class Utilities {
 
     public static String ordinalOf(int index) {
         switch (index) {
-            case 0:
-                return "st";
-            case 1:
-                return "nd";
-            case 2:
-                return "rd";
-            default:
-                return "th";
+        case 0:
+            return "st";
+        case 1:
+            return "nd";
+        case 2:
+            return "rd";
+        default:
+            return "th";
         }
     }
 
