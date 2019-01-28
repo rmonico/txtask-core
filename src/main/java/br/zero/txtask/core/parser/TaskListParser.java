@@ -37,7 +37,7 @@ public class TaskListParser implements Parser<TaskList> {
     public TaskList doParse(ParserReader reader) throws ParserException {
         try {
             if (reader.finished())
-                throw new ParserException("Reader is empty");
+                throw new ParserException("List is empty");
 
             return internalParse(reader);
         } catch (IOException e) {

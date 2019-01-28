@@ -26,7 +26,7 @@ public class ParserTests {
 
         ParserException exception = assertThrows(ParserException.class, () -> parser.parse(new StringReader("")));
 
-        assertThat(exception.getMessage(), is("Reader is empty"));
+        assertThat(exception.getMessage(), is("List is empty"));
     }
 
     @Test
