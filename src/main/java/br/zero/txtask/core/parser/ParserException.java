@@ -1,5 +1,7 @@
 package br.zero.txtask.core.parser;
 
+import static java.lang.String.format;
+
 public class ParserException extends Exception {
     /**
      * 
@@ -10,7 +12,7 @@ public class ParserException extends Exception {
         super(e);
     }
 
-    public ParserException(final String message) {
-        super(message);
+    public ParserException(String message, Object... objects) {
+        super(format(message, objects));
     }
 }
