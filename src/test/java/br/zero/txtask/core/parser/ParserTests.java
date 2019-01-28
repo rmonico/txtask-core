@@ -24,7 +24,9 @@ public class ParserTests {
     public void should_not_parse_a_empty_buffer() {
         TaskListParser parser = new TaskListParser();
 
-        assertThrows(ParserException.class, () -> parser.parse(new StringReader("")), "Reader is empty");
+        ParserException exception = assertThrows(ParserException.class, () -> parser.parse(new StringReader("")));
+
+        assertThat(exception.getMessage(), is("Reader is empty"));
     }
 
     @Test
@@ -107,4 +109,14 @@ public class ParserTests {
 
         assertThat(list, taskCount(is(3)));
     }
+
+    @Test
+    public void should_not_parse_list_with_invalid_header() throws ParserException {
+        TaskListParser parser = new TaskListParser();
+
+        ParserException exception = assertThrows(ParserException.class, () -> parser.parse(new StringReader("== Invalid list header, should be :: ")));
+
+        assertThat(exception.getMessage(), is("List must start with ':: '"));
+    }
+
 }
