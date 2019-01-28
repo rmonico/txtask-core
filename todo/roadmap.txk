@@ -12,7 +12,7 @@ x Task title
   ; This char: #
 x Task tag
   x Allow regex "[a-z_][a-z0-9_\.]*" #restriction #future
-- Implicit tags
+x Implicit tags
 - Subtasks
 - Long comments
   - Indented on subtasks #restriction #future
