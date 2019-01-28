@@ -1,0 +1,11 @@
+:: Task list with tag groups
+
+##tag ##another_tag ##one_more_tag
+
+- Task with implicit tags #explicit_tag
+
+- Another task with implicit tags #explicit_another_tag
+
+==another_tag ==tag
+
+- Task with just one implicit tag #explicit_tag

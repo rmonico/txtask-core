@@ -78,4 +78,31 @@ public class ParserTests {
         });
     }
 
+    @Test
+    public void should_parse_tag_group() throws FileNotFoundException, ParserException {
+        TaskListParser parser = new TaskListParser();
+
+        TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_tag_group.txk"));
+        assertThat(list, title(is("Task list with tag groups")));
+
+        assertThat(list, taskCount(is(3)));
+        assertThat(list, task(0).title(is("Task with implicit tags")));
+        assertThat(list, task(0).tagCount(is(4)));
+        assertThat(list, task(0).tag(0).name(is("explicit_tag")));
+        assertThat(list, task(0).tag(1).name(is("tag")));
+        assertThat(list, task(0).tag(2).name(is("another_tag")));
+        assertThat(list, task(0).tag(3).name(is("one_more_tag")));
+
+        assertThat(list, task(1).title(is("Another task with implicit tags")));
+        assertThat(list, task(1).tagCount(is(4)));
+        assertThat(list, task(1).tag(0).name(is("explicit_another_tag")));
+        assertThat(list, task(1).tag(1).name(is("tag")));
+        assertThat(list, task(1).tag(2).name(is("another_tag")));
+        assertThat(list, task(1).tag(3).name(is("one_more_tag")));
+
+        assertThat(list, task(2).title(is("Task with just one implicit tag")));
+        assertThat(list, task(2).tagCount(is(2)));
+        assertThat(list, task(2).tag(0).name(is("explicit_tag")));
+        assertThat(list, task(2).tag(1).name(is("tag")));
+    }
 }
