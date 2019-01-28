@@ -3,9 +3,11 @@ package br.zero.txtask.core.parser;
 import static br.zero.txtask.core.matchers.TaskListMatchers.task;
 import static br.zero.txtask.core.matchers.TaskListMatchers.taskCount;
 import static br.zero.txtask.core.matchers.TaskListMatchers.title;
+import static java.time.Duration.ofSeconds;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -70,4 +72,16 @@ public class ParserTests {
         assertThat(list, task(1).tag(0).name(is("this_time_with_1_tag.dots_and_numb3rs_are_allowed_too")));
         assertThat(list, task(1).tag(1).name(is("another_tag")));
     }
+
+    @Test
+    public void should_stop_parsing_on_invalid_token() throws FileNotFoundException, ParserException {
+        TaskListParser parser = new TaskListParser();
+
+        assertTimeoutPreemptively(ofSeconds(3), () -> {
+            assertThrows(ParserException.class, () -> {
+                parser.parse(new FileReader("src/test/resources/should_stop_parsing_on_invalid_token.txk"));
+            }, "Invalid token: '__invalid__token__'");
+        });
+    }
+
 }
