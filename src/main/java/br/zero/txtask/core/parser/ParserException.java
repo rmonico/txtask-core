@@ -1,13 +1,16 @@
 package br.zero.txtask.core.parser;
 
-import java.io.IOException;
-
 public class ParserException extends Exception {
-    public ParserException(Throwable e) {
-        super(e);
-    }
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1771024495164039959L;
 
-    public ParserException(final String message) {
-        super(message);
-    }
+	public ParserException(Throwable e) {
+		super(e);
+	}
+
+	public ParserException(final String message) {
+		super(message);
+	}
 }
