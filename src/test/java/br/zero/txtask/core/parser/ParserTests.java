@@ -14,7 +14,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import br.zero.txtask.core.model.TaskList;
@@ -45,10 +44,10 @@ public class ParserTests {
 
         assertThat(list, title(is("A simple task list")));
 
-        assertThat(list, taskCount(is(3)));
         assertThat(list, task(0).title(is("First task")));
         assertThat(list, task(1).title(is("Second task")));
         assertThat(list, task(2).title(is("Third task")));
+        assertThat(list, taskCount(is(3)));
     }
 
     @Test
@@ -59,12 +58,14 @@ public class ParserTests {
 
         assertThat(list, title(is("A list to test tags on tasks")));
 
-        assertThat(list, taskCount(is(2)));
         assertThat(list, task(0).title(is("Task with no tags")));
+
         assertThat(list, task(1).title(is("Another task")));
-        assertThat(list, task(1).tagCount(is(2)));
         assertThat(list, task(1).tag(0).name(is("this_time_with_1_tag.dots_and_numb3rs_are_allowed_too")));
         assertThat(list, task(1).tag(1).name(is("another_tag")));
+        assertThat(list, task(1).tagCount(is(2)));
+
+        assertThat(list, taskCount(is(2)));
     }
 
     @Test
@@ -85,24 +86,25 @@ public class ParserTests {
         TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_tag_group.txk"));
         assertThat(list, title(is("Task list with tag groups")));
 
-        assertThat(list, taskCount(is(3)));
         assertThat(list, task(0).title(is("Task with implicit tags")));
-        assertThat(list, task(0).tagCount(is(4)));
         assertThat(list, task(0).tag(0).name(is("explicit_tag")));
         assertThat(list, task(0).tag(1).name(is("tag")));
         assertThat(list, task(0).tag(2).name(is("another_tag")));
         assertThat(list, task(0).tag(3).name(is("one_more_tag")));
+        assertThat(list, task(0).tagCount(is(4)));
 
         assertThat(list, task(1).title(is("Another task with implicit tags")));
-        assertThat(list, task(1).tagCount(is(4)));
         assertThat(list, task(1).tag(0).name(is("explicit_another_tag")));
         assertThat(list, task(1).tag(1).name(is("tag")));
         assertThat(list, task(1).tag(2).name(is("another_tag")));
         assertThat(list, task(1).tag(3).name(is("one_more_tag")));
+        assertThat(list, task(1).tagCount(is(4)));
 
         assertThat(list, task(2).title(is("Task with just one implicit tag")));
-        assertThat(list, task(2).tagCount(is(2)));
         assertThat(list, task(2).tag(0).name(is("explicit_tag")));
-        assertThat(list, task(2).tag(1).name(is("tag")));
+        assertThat(list, task(2).tag(1).name(is("one_more_tag")));
+        assertThat(list, task(2).tagCount(is(2)));
+
+        assertThat(list, taskCount(is(3)));
     }
 }
