@@ -4,6 +4,6 @@ import br.zero.txtask.core.model.Element;
 
 public interface Parser<E extends Element> {
 
-    E parse(Reader source) throws ParserException;
+    E doParse(ParserReader reader) throws ParserException;
 
 }

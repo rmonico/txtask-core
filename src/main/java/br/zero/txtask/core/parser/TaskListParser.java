@@ -9,65 +9,74 @@ import br.zero.txtask.core.model.TaskList;
 
 public class TaskListParser implements Parser<TaskList> {
 
-    private static final String TASK_LIST_TITLE_PREFIX_REGEX = "^:: .+$";
-    private static final String TASK_STATUS_REGEX = "[-x]";
-    private static final String TASK_PREFIX_REGEX = format("%s ", TASK_STATUS_REGEX);
-    private static final String TASK_NAME_REGEX = "(?<tagname>[a-z_][a-z0-9_\\.]*)";
-    private static final String TAG_REGEX = format(" #%s", TASK_NAME_REGEX);
-    private static final String TASK_TITLE_REGEX = format("^%s(?<tasktitle>[^#]+)(%s)*$", TASK_PREFIX_REGEX, TAG_REGEX);
+    private static final String LIST_TITLE_PREFIX = ":: ";
+    private static final String[] TASK_STATUSES = { "- ", "x " };
+    private static final String TAG_PREFIX = " #";
 
-    private static final Pattern TAG_PATTERN = Pattern.compile(TAG_REGEX);
-    private static final Pattern TASK_TITLE_PATTERN = Pattern.compile(TASK_TITLE_REGEX);
+    public TaskList parse(Reader source) throws ParserException {
+        ParserReader reader = new ParserReader(source);
+
+        return this.doParse(reader);
+    }
 
     @Override
-    public TaskList parse(Reader source) throws ParserException {
-        BufferedReader reader = new BufferedReader(source);
-
-        TaskList taskList = new TaskList();
-
+    public TaskList doParse(ParserReader reader) throws ParserException {
         try {
-            String line = reader.readLine();
-
-            if (line == null)
-                throw new ParserException("Reader is empty");
-
-            while (line != null) {
-                doParse(taskList, line);
-
-                line = reader.readLine();
-            }
+            return internalParse(reader);
         } catch (IOException e) {
             throw new ParserException(e);
+        }
+    }
+
+    private TaskList internalParse(ParserReader reader) throws ParserException, IOException {
+        TaskList taskList = new TaskList();
+
+        if (reader.finished())
+            throw new ParserException("Reader is empty");
+
+        if (reader.followed().by(LIST_TITLE_PREFIX).go()) {
+            reader.consume().next(LIST_TITLE_PREFIX.length()).go();
+            String title = reader.consume().eol().go();
+
+            taskList.setTitle(title);
+        } else if (reader.finished())
+            throw new ParserException("Empty list");
+        else
+            // TODO Test this
+            throw new ParserException("List must start with a title");
+
+        while (!reader.finished()) {
+            int statusIndex = 0;
+            if ((statusIndex = reader.followed().byAnyOf(TASK_STATUSES).which()) > -1) {
+                String statusFound = TASK_STATUSES[statusIndex];
+
+                reader.consume().next(statusFound.length()).go();
+
+                Task task = new Task();
+
+                String taskTitle = reader.consume().until(TAG_PREFIX).or().eol().go();
+
+                task.setTitle(taskTitle);
+
+                taskList.getTasks().add(task);
+
+                while (reader.followed().by(TAG_PREFIX).go()) {
+                    reader.consume().next(TAG_PREFIX.length()).go();
+
+                    Tag tag = new Tag();
+
+                    String tagName = reader.consume().until(TAG_PREFIX).or().eol().go();
+
+                    tag.setName(tagName);
+
+                    task.getTags().add(tag);
+                }
+            } else if (reader.followed().byEol().go()) {
+                reader.consume().next(1).go();
+            }
         }
 
         return taskList;
     }
 
-    private void doParse(TaskList taskList, String line) {
-        if (line.matches(TASK_LIST_TITLE_PREFIX_REGEX))
-            taskList.setTitle(line.substring(3));
-        else if (line.matches("^" + TASK_PREFIX_REGEX + ".+$")) {
-            Task task = new Task();
-
-            Matcher match = TAG_PATTERN.matcher(line);
-
-            while (match.find()) {
-                String tagName = match.group("tagname");
-
-                Tag tag = new Tag();
-                tag.setName(tagName);
-
-                task.getTags().add(tag);
-            }
-
-            match = TASK_TITLE_PATTERN.matcher(line);
-
-            // TODO Check if == 0
-            match.find();
-
-            task.setTitle(match.group("tasktitle"));
-
-            taskList.getTasks().add(task);
-        }
-    }
 }
