@@ -46,6 +46,7 @@ public class TaskListParser implements Parser<TaskList> {
             throw new ParserException("List must start with a title");
 
         while (!reader.finished()) {
+            // TODO Refactor
             int statusIndex = 0;
             if ((statusIndex = reader.followed().byAnyOf(TASK_STATUSES).which()) > -1) {
                 String statusFound = TASK_STATUSES[statusIndex];

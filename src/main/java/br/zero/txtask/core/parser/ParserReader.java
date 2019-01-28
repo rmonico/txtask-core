@@ -32,6 +32,7 @@ public class ParserReader {
     }
 
     StringBuilder get(int charCount) throws IOException {
+        // TODO Refactor
         if (this.buffer == null || this.buffer.remaining() < charCount) {
             CharBuffer oldBuffer = this.buffer;
 

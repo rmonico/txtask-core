@@ -52,6 +52,7 @@ class ParserReaderGetter {
 
             return reader.get(charCount).toString();
         } else {
+            // TODO Refactor
             StringBuilder buffer = new StringBuilder("");
 
             boolean somethingFound = false;
