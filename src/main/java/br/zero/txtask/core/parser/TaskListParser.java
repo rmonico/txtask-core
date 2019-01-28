@@ -53,9 +53,7 @@ public class TaskListParser implements Parser<TaskList> {
             String title = reader.consume().eol().go();
 
             taskList.setTitle(title);
-        } else if (reader.finished())
-            throw new ParserException("Empty list");
-        else
+        } else
             throw new ParserException("List must start with ':: '");
 
         List<Tag> implicitTags = new ArrayList<>();
