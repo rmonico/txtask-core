@@ -1,18 +1,21 @@
 package br.zero.txtask.core.parser;
 
-import br.zero.txtask.core.model.TaskList;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import static br.zero.txtask.core.matchers.TaskListMatchers.task;
+import static br.zero.txtask.core.matchers.TaskListMatchers.taskCount;
+import static br.zero.txtask.core.matchers.TaskListMatchers.title;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 
-import static br.zero.txtask.core.matchers.TaskListMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+import br.zero.txtask.core.model.TaskList;
 
 public class ParserTests {
 

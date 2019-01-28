@@ -1,13 +1,14 @@
 package br.zero.txtask.core.matchers;
 
+import static br.zero.txtask.core.matchers.Utilities.toStrWithOrdinal;
+import static java.lang.String.format;
+
+import org.hamcrest.Matcher;
+
 import br.zero.txtask.core.matchers.TaskMatchers.TaskFeatureMatcher;
 import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.model.Task;
 import br.zero.txtask.core.model.TaskList;
-import org.hamcrest.Matcher;
-
-import static br.zero.txtask.core.matchers.Utilities.toStrWithOrdinal;
-import static java.lang.String.format;
 
 public class TagMatchers {
     private int taskIndex;

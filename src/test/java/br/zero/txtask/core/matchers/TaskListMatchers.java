@@ -1,8 +1,9 @@
 package br.zero.txtask.core.matchers;
 
-import br.zero.txtask.core.model.TaskList;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
+
+import br.zero.txtask.core.model.TaskList;
 
 public class TaskListMatchers {
 
