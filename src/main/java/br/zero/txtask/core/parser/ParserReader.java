@@ -27,8 +27,8 @@ public class ParserReader {
         return new ParserReaderConsumer(this);
     }
 
-    public boolean finished() {
-        return this.buffer != null && !this.buffer.hasRemaining();
+    public boolean finished() throws IOException {
+        return get(1).length() == 0;
     }
 
     StringBuilder get(int charCount) throws IOException {
