@@ -56,8 +56,7 @@ public class TaskListParser implements Parser<TaskList> {
         } else if (reader.finished())
             throw new ParserException("Empty list");
         else
-            // TODO Test this
-            throw new ParserException("List must start with a title");
+            throw new ParserException("List must start with ':: '");
 
         List<Tag> implicitTags = new ArrayList<>();
 
