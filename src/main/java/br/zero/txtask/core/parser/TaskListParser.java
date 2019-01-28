@@ -48,13 +48,7 @@ public class TaskListParser implements Parser<TaskList> {
     private TaskList internalParse(ParserReader reader) throws ParserException, IOException {
         TaskList taskList = new TaskList();
 
-        if (reader.followed().by(LIST_TITLE_PREFIX).go()) {
-            reader.consume().next(LIST_TITLE_PREFIX.length()).go();
-            String title = reader.consume().eol().go();
-
-            taskList.setTitle(title);
-        } else
-            throw new ParserException("List must start with ':: '");
+        parseTitle(reader, taskList);
 
         List<Tag> implicitTags = new ArrayList<>();
 
@@ -91,6 +85,17 @@ public class TaskListParser implements Parser<TaskList> {
         }
 
         return taskList;
+    }
+
+    private void parseTitle(ParserReader reader,
+            TaskList taskList) throws IOException, ParserException {
+        if (reader.followed().by(LIST_TITLE_PREFIX).go()) {
+            reader.consume().next(LIST_TITLE_PREFIX.length()).go();
+            String title = reader.consume().eol().go();
+
+            taskList.setTitle(title);
+        } else
+            throw new ParserException("List must start with ':: '");
     }
 
     private void parseTags(ParserReader reader,
