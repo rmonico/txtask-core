@@ -36,6 +36,9 @@ public class TaskListParser implements Parser<TaskList> {
     @Override
     public TaskList doParse(ParserReader reader) throws ParserException {
         try {
+            if (reader.finished())
+                throw new ParserException("Reader is empty");
+
             return internalParse(reader);
         } catch (IOException e) {
             throw new ParserException(e);
@@ -44,9 +47,6 @@ public class TaskListParser implements Parser<TaskList> {
 
     private TaskList internalParse(ParserReader reader) throws ParserException, IOException {
         TaskList taskList = new TaskList();
-
-        if (reader.finished())
-            throw new ParserException("Reader is empty");
 
         if (reader.followed().by(LIST_TITLE_PREFIX).go()) {
             reader.consume().next(LIST_TITLE_PREFIX.length()).go();
