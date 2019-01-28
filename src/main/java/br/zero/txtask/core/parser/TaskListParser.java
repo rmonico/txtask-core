@@ -1,7 +1,12 @@
 package br.zero.txtask.core.parser;
 
+import static java.lang.String.format;
+
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.model.Task;
@@ -11,7 +16,16 @@ public class TaskListParser implements Parser<TaskList> {
 
     private static final String LIST_TITLE_PREFIX = ":: ";
     private static final String[] TASK_STATUSES = { "- ", "x " };
-    private static final String TAG_PREFIX = " #";
+    private static final String TAG_MARK = "#";
+    private static final String TAG_PREFIX = format(" %s", TAG_MARK);
+
+    private static final String IMPLICIT_TAG_MARK = format("#%s", TAG_MARK);
+    private static final String IMPLICIT_TAG_PREFIX = format(" %s", IMPLICIT_TAG_MARK);
+    private static final String IMPLICIT_TAG_INITIAL_PREFIX = format("\n%s", IMPLICIT_TAG_MARK);
+
+    private static final String IMPLICIT_TAG_REMOVAL_MARK = "==";
+    private static final String IMPLICIT_TAG_REMOVAL_PREFIX = format(" %s", IMPLICIT_TAG_REMOVAL_MARK);
+    private static final String IMPLICIT_TAG_REMOVAL_INITIAL_PREFIX = format("\n%s", IMPLICIT_TAG_REMOVAL_MARK);
 
     public TaskList parse(Reader source) throws ParserException {
         ParserReader reader = new ParserReader(source);
@@ -45,6 +59,8 @@ public class TaskListParser implements Parser<TaskList> {
             // TODO Test this
             throw new ParserException("List must start with a title");
 
+        List<Tag> implicitTags = new ArrayList<>();
+
         while (!reader.finished()) {
             // TODO Refactor
             int statusIndex = 0;
@@ -61,17 +77,13 @@ public class TaskListParser implements Parser<TaskList> {
 
                 taskList.getTasks().add(task);
 
-                while (reader.followed().by(TAG_PREFIX).go()) {
-                    reader.consume().next(TAG_PREFIX.length()).go();
+                parseTags(reader, tag -> task.getTags().add(tag), TAG_PREFIX);
 
-                    Tag tag = new Tag();
-
-                    String tagName = reader.consume().until(TAG_PREFIX).or().eol().go();
-
-                    tag.setName(tagName);
-
-                    task.getTags().add(tag);
-                }
+                task.getTags().addAll(implicitTags);
+            } else if (reader.followed().by(IMPLICIT_TAG_INITIAL_PREFIX).go()) {
+                parseTags(reader, tag -> implicitTags.add(tag), IMPLICIT_TAG_INITIAL_PREFIX, IMPLICIT_TAG_PREFIX);
+            } else if (reader.followed().by(IMPLICIT_TAG_REMOVAL_INITIAL_PREFIX).go()) {
+                parseTags(reader, tag -> implicitTags.remove(tag), IMPLICIT_TAG_REMOVAL_INITIAL_PREFIX, IMPLICIT_TAG_REMOVAL_PREFIX);
             } else if (reader.followed().byEol().go()) {
                 reader.consume().next(1).go();
             } else {
@@ -82,6 +94,24 @@ public class TaskListParser implements Parser<TaskList> {
         }
 
         return taskList;
+    }
+
+    private void parseTags(ParserReader reader,
+            Consumer<Tag> onTagFound,
+            String... prefixes) throws IOException {
+
+        int prefixIndex;
+        while ((prefixIndex = reader.followed().byAnyOf(prefixes).which()) > -1) {
+            reader.consume().next(prefixes[prefixIndex].length()).go();
+
+            Tag tag = new Tag();
+
+            String tagName = reader.consume().until(prefixes).or().eol().go();
+
+            tag.setName(tagName);
+
+            onTagFound.accept(tag);
+        }
     }
 
 }
