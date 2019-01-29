@@ -1,7 +1,7 @@
 package br.zero.txtask.core.matchers;
 
-import static br.zero.txtask.core.matchers.StringFormatter.s;
-import static br.zero.txtask.core.matchers.StringFormatter.ordinal;
+import static br.zero.java.StringFormatter.ordinal;
+import static br.zero.java.StringFormatter.s;
 
 import org.hamcrest.Matcher;
 

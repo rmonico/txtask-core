@@ -1,7 +1,7 @@
 package br.zero.txtask.core.parser;
 
-import static br.zero.txtask.core.matchers.MapBuilder.create;
-import static br.zero.txtask.core.matchers.StringFormatter.s;
+import static br.zero.java.MapBuilder.create;
+import static br.zero.java.StringFormatter.s;
 import static br.zero.txtask.core.model.Status.DONE;
 import static br.zero.txtask.core.model.Status.OPEN;
 

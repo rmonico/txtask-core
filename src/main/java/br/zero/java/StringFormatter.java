@@ -1,4 +1,4 @@
-package br.zero.txtask.core.matchers;
+package br.zero.java;
 
 public class StringFormatter {
 
