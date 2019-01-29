@@ -1,5 +1,7 @@
 package br.zero.txtask.core.model;
 
+import static br.zero.txtask.core.model.Status.OPEN;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ public class Task {
 
     public Task() {
         tags = new ArrayList<>();
+        status = OPEN;
     }
 
     public String getTitle() {
