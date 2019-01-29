@@ -1,14 +1,19 @@
 package br.zero.txtask.core.parser;
 
-import static java.lang.String.format;
+import static br.zero.txtask.core.matchers.MapBuilder.create;
 import static br.zero.txtask.core.matchers.StringFormatter.s;
+import static br.zero.txtask.core.model.Status.DONE;
+import static br.zero.txtask.core.model.Status.OPEN;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 
+import br.zero.txtask.core.model.Status;
 import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.model.Task;
 import br.zero.txtask.core.model.TaskList;
@@ -16,7 +21,11 @@ import br.zero.txtask.core.model.TaskList;
 class TaskListParserImpl implements TaskListParser {
 
     private static final String LIST_TITLE_PREFIX = ":: ";
-    private static final String[] TASK_STATUSES = { "- ", "x " };
+
+    private static final Map<Status, String> TASK_STATUSES = create(Status.class, String.class).hashMap().put(OPEN, "- ").put(DONE, "x ").done();
+
+    private static final String[] TASK_STATUSES_ARRAY = TASK_STATUSES.values().toArray(new String[] {});
+
     private static final String TAG_MARK = "#";
     private static final String TAG_PREFIX = s(" %s").format(TAG_MARK);
 
@@ -55,12 +64,16 @@ class TaskListParserImpl implements TaskListParser {
         while (!reader.finished()) {
             // TODO Refactor
             int statusIndex = 0;
-            if ((statusIndex = reader.followed().byAnyOf(TASK_STATUSES).which()) > -1) {
-                String statusFound = TASK_STATUSES[statusIndex];
-
-                reader.consume().next(statusFound.length()).go();
-
+            if ((statusIndex = reader.followed().byAnyOf(TASK_STATUSES_ARRAY).which()) > -1) {
                 Task task = new Task();
+
+                String statusString = reader.consume().next(TASK_STATUSES_ARRAY[statusIndex].length()).go();
+
+                Status status = getTaskStatusByPrefix(statusString);
+
+                assert status != null : s("Task status not found: '%s'").format(statusString);
+
+                task.setStatus(status);
 
                 String taskTitle = reader.consume().until(TAG_PREFIX).or().eol().go();
 
@@ -96,6 +109,14 @@ class TaskListParserImpl implements TaskListParser {
             taskList.setTitle(title);
         } else
             throw new ParserException("List must start with ':: '");
+    }
+
+    private Status getTaskStatusByPrefix(String prefix) {
+        for (Entry<Status, String> entry : TASK_STATUSES.entrySet())
+            if (entry.getValue().equals(prefix))
+                return entry.getKey();
+
+        return null;
     }
 
     private void parseTags(ParserReader reader,
