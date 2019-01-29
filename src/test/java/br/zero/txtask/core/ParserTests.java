@@ -3,6 +3,8 @@ package br.zero.txtask.core;
 import static br.zero.txtask.core.matchers.TaskListMatchers.task;
 import static br.zero.txtask.core.matchers.TaskListMatchers.taskCount;
 import static br.zero.txtask.core.matchers.TaskListMatchers.title;
+import static br.zero.txtask.core.model.Status.DONE;
+import static br.zero.txtask.core.model.Status.OPEN;
 import static java.time.Duration.ofSeconds;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -122,4 +124,16 @@ public class ParserTests {
         assertThat(exception.getMessage(), is("List must start with ':: '"));
     }
 
+    @Test
+    public void should_parse_task_statuses() throws FileNotFoundException, ParserException {
+        TaskListParser parser = TaskListParserFactory.create();
+
+        TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_task_statuses.txk"));
+
+        assertThat(list, task(0).title(is("Open task")));
+        assertThat(list, task(0).status(is(OPEN)));
+
+        assertThat(list, task(1).title(is("Done task")));
+        assertThat(list, task(1).status(is(DONE)));
+    }
 }

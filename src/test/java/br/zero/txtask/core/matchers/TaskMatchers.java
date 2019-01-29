@@ -6,6 +6,7 @@ import static java.lang.String.format;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 
+import br.zero.txtask.core.model.Status;
 import br.zero.txtask.core.model.Task;
 import br.zero.txtask.core.model.TaskList;
 
@@ -43,6 +44,17 @@ public class TaskMatchers {
                 return actual.getTitle();
             }
         };
+    }
+
+    public Matcher<TaskList> status(Matcher<Status> statusMatcher) {
+        return new TaskFeatureMatcher<Status>(statusMatcher, "status", this.itemIndex) {
+
+            @Override
+            protected Status featureOfTask(Task actual) {
+                return actual.getStatus();
+            }
+        };
+
     }
 
     public Matcher<TaskList> tagCount(Matcher<Integer> tagCountMatcher) {
