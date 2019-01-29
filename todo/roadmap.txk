@@ -20,7 +20,7 @@ x Implicit tags
 - Short comments
   - Indented on subtasks #restriction #future
   - Append when consecutive comments are found #future
-- Task status
+x Task status
 - Tags with value
 ; Initially will allow any value
 
