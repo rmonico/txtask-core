@@ -6,6 +6,7 @@ import java.util.List;
 public class Task {
     private String title;
     private List<Tag> tags;
+    private Status status;
 
     public Task() {
         tags = new ArrayList<>();
@@ -21,6 +22,14 @@ public class Task {
 
     public List<Tag> getTags() {
         return tags;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
 }
