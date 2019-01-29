@@ -1,6 +1,7 @@
 package br.zero.txtask.core.parser;
 
 import static java.lang.String.format;
+import static br.zero.txtask.core.matchers.StringFormatter.s;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -17,22 +18,22 @@ class TaskListParserImpl implements TaskListParser {
     private static final String LIST_TITLE_PREFIX = ":: ";
     private static final String[] TASK_STATUSES = { "- ", "x " };
     private static final String TAG_MARK = "#";
-    private static final String TAG_PREFIX = format(" %s", TAG_MARK);
+    private static final String TAG_PREFIX = s(" %s").format(TAG_MARK);
 
-    private static final String IMPLICIT_TAG_MARK = format("#%s", TAG_MARK);
-    private static final String IMPLICIT_TAG_PREFIX = format(" %s", IMPLICIT_TAG_MARK);
-    private static final String IMPLICIT_TAG_INITIAL_PREFIX = format("\n%s", IMPLICIT_TAG_MARK);
+    private static final String IMPLICIT_TAG_MARK = s("#%s").format(TAG_MARK);
+    private static final String IMPLICIT_TAG_PREFIX = s(" %s").format(IMPLICIT_TAG_MARK);
+    private static final String IMPLICIT_TAG_INITIAL_PREFIX = s("\n%s").format(IMPLICIT_TAG_MARK);
 
     private static final String IMPLICIT_TAG_REMOVAL_MARK = "==";
-    private static final String IMPLICIT_TAG_REMOVAL_PREFIX = format(" %s", IMPLICIT_TAG_REMOVAL_MARK);
-    private static final String IMPLICIT_TAG_REMOVAL_INITIAL_PREFIX = format("\n%s", IMPLICIT_TAG_REMOVAL_MARK);
+    private static final String IMPLICIT_TAG_REMOVAL_PREFIX = s(" %s").format(IMPLICIT_TAG_REMOVAL_MARK);
+    private static final String IMPLICIT_TAG_REMOVAL_INITIAL_PREFIX = s("\n%s").format(IMPLICIT_TAG_REMOVAL_MARK);
 
     @Override
     public TaskList parse(Reader source) throws ParserException {
         ParserReader parserReader = new ParserReader(source);
         return this.doParse(parserReader);
     }
-    
+
     private TaskList doParse(ParserReader reader) throws ParserException {
         try {
             if (reader.finished())
@@ -79,7 +80,7 @@ class TaskListParserImpl implements TaskListParser {
             } else {
                 String nextToken = reader.consume().until(" ").or().eol().go();
 
-                throw new ParserException("Invalid token: '%s'", nextToken);
+                throw new ParserException(s("Invalid token: '%s'").format(nextToken));
             }
         }
 

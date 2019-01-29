@@ -1,7 +1,7 @@
 package br.zero.txtask.core.matchers;
 
-import static br.zero.txtask.core.matchers.Utilities.toStrWithOrdinal;
-import static java.lang.String.format;
+import static br.zero.txtask.core.matchers.StringFormatter.s;
+import static br.zero.txtask.core.matchers.StringFormatter.ordinal;
 
 import org.hamcrest.Matcher;
 
@@ -23,7 +23,7 @@ public class TagMatchers {
         private int tagIndex;
 
         public TagFeatureMatcher(Matcher<U> subMatcher, String featureName, int taskIndex, int tagIndex) {
-            super(subMatcher, format("%s of %s tag", featureName, toStrWithOrdinal(tagIndex), toStrWithOrdinal(taskIndex)), taskIndex);
+            super(subMatcher, s("%s of %s tag").format(featureName, ordinal(tagIndex), ordinal(taskIndex)), taskIndex);
             this.tagIndex = tagIndex;
         }
 
