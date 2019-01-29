@@ -1,4 +1,4 @@
-package br.zero.txtask.core.parser;
+package br.zero.txtask.core;
 
 import static br.zero.txtask.core.matchers.TaskListMatchers.task;
 import static br.zero.txtask.core.matchers.TaskListMatchers.taskCount;
@@ -17,12 +17,15 @@ import java.io.StringReader;
 import org.junit.jupiter.api.Test;
 
 import br.zero.txtask.core.model.TaskList;
+import br.zero.txtask.core.parser.ParserException;
+import br.zero.txtask.core.parser.TaskListParser;
+import br.zero.txtask.core.parser.TaskListParserFactory;
 
 public class ParserTests {
 
     @Test
     public void should_not_parse_a_empty_buffer() {
-        TaskListParser parser = new TaskListParser();
+        TaskListParser parser = TaskListParserFactory.create();
 
         ParserException exception = assertThrows(ParserException.class, () -> parser.parse(new StringReader("")));
 
@@ -31,7 +34,7 @@ public class ParserTests {
 
     @Test
     public void should_parse_list_title() throws ParserException {
-        TaskListParser parser = new TaskListParser();
+        TaskListParser parser = TaskListParserFactory.create();
 
         TaskList list = parser.parse(new StringReader(":: List title"));
 
@@ -40,7 +43,7 @@ public class ParserTests {
 
     @Test
     public void should_parse_list_title_and_its_tasks() throws IOException, ParserException {
-        TaskListParser parser = new TaskListParser();
+        TaskListParser parser = TaskListParserFactory.create();
 
         TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_list_title_and_its_tasks.txk"));
 
@@ -54,7 +57,7 @@ public class ParserTests {
 
     @Test
     public void should_parse_task_tags() throws FileNotFoundException, ParserException {
-        TaskListParser parser = new TaskListParser();
+        TaskListParser parser = TaskListParserFactory.create();
 
         TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_task_tags.txk"));
 
@@ -72,7 +75,7 @@ public class ParserTests {
 
     @Test
     public void should_stop_parsing_on_invalid_token() throws FileNotFoundException, ParserException {
-        TaskListParser parser = new TaskListParser();
+        TaskListParser parser = TaskListParserFactory.create();
 
         assertTimeoutPreemptively(ofSeconds(3), () -> {
             assertThrows(ParserException.class, () -> {
@@ -83,7 +86,7 @@ public class ParserTests {
 
     @Test
     public void should_parse_tag_group() throws FileNotFoundException, ParserException {
-        TaskListParser parser = new TaskListParser();
+        TaskListParser parser = TaskListParserFactory.create();
 
         TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_tag_group.txk"));
         assertThat(list, title(is("Task list with tag groups")));
@@ -112,7 +115,7 @@ public class ParserTests {
 
     @Test
     public void should_not_parse_list_with_invalid_header() throws ParserException {
-        TaskListParser parser = new TaskListParser();
+        TaskListParser parser = TaskListParserFactory.create();
 
         ParserException exception = assertThrows(ParserException.class, () -> parser.parse(new StringReader("== Invalid list header, should be :: ")));
 

@@ -3,7 +3,7 @@ package br.zero.txtask.core.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskList implements Element {
+public class TaskList {
 
     private String title;
     private List<Task> tasks;
