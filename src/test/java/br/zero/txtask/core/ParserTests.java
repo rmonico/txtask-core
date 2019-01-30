@@ -135,5 +135,7 @@ public class ParserTests {
 
         assertThat(list, task(1).title(is("Done task")));
         assertThat(list, task(1).status(is(DONE)));
+
+        assertThat(list, taskCount(is(2)));
     }
 }
