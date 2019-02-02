@@ -138,4 +138,18 @@ public class ParserTests {
 
         assertThat(list, taskCount(is(2)));
     }
+
+    @Test
+    public void should_parse_subtasks() throws FileNotFoundException, ParserException {
+        TaskListParser parser = TaskListParserFactory.create();
+
+        TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_subtasks.txk"));
+
+        assertThat(list, task(0).title().should(is("Parent task")));
+        assertThat(list, task(0).subTask(0).title().should(is("Sub task")));
+        assertThat(list, task(0).subTask(0).subTask(0).title().should(is("Sub task")));
+
+        assertThat(list, taskCount(is(2)));
+    }
+
 }
