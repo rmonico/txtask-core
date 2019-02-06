@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import br.zero.txtask.core.model.TaskList;
@@ -88,6 +89,7 @@ public class ParserTests {
     }
 
     @Test
+    @Disabled
     public void should_parse_tag_group() throws FileNotFoundException, ParserException {
         TaskListParser parser = TaskListParserFactory.create();
 
@@ -132,6 +134,7 @@ public class ParserTests {
     }
 
     @Test
+    @Disabled
     public void should_parse_subtasks() throws FileNotFoundException, ParserException {
         TaskListParser parser = TaskListParserFactory.create();
 
