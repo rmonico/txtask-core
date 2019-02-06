@@ -12,12 +12,11 @@ import java.util.function.Consumer;
 import br.zero.txtask.core.model.Status;
 import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.model.Task;
-import br.zero.txtask.core.model.TaskList;
 import br.zero.txtask.core.parser.ParserException;
-import br.zero.txtask.core.parser.element.AbstractElementParser;
+import br.zero.txtask.core.parser.element.ElementParser;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
-public class TaskParser extends AbstractElementParser<Task> {
+public class TaskParser implements ElementParser<Task> {
 
     @Override
     public Task parse(ParserReader reader) throws ParserException, IOException {
@@ -78,14 +77,6 @@ public class TaskParser extends AbstractElementParser<Task> {
 
             onTagFound.accept(tag);
         }
-    }
-
-    @Override
-    protected void internalPut(TaskList taskList,
-            Task task) {
-        taskList.getTasks().add(task);
-
-        task.getTags().addAll(context.implicitTags());
     }
 
 }

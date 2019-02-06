@@ -21,10 +21,4 @@ public class TagGroupParser extends AbstractTagParser {
         return null;
     }
 
-    @Override
-    protected void internalPut(TaskList taskList,
-            Tag element) {
-
-    }
-
 }
