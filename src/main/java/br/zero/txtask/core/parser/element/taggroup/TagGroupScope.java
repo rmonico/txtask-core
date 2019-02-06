@@ -14,7 +14,7 @@ public class TagGroupScope extends AbstractTagMatcher {
 
     @Override
     protected ElementParser<Tag> makeParser() {
-        return new TagGroupParser(IMPLICIT_TAG_INITIAL_PREFIX);
+        return new TagGroupParser();
     }
 
 }
