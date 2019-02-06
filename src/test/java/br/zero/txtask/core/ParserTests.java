@@ -28,6 +28,15 @@ import br.zero.txtask.core.parser.TaskListParserFactory;
 public class ParserTests {
 
     @Test
+    public void should_parse_list_title() throws ParserException {
+        TaskListParser parser = TaskListParserFactory.create();
+
+        TaskList list = parser.parse(new StringReader(":: List title"));
+
+        assertThat(list, title().should(is("List title")));
+    }
+
+    @Test
     public void should_not_parse_a_empty_buffer() {
         TaskListParser parser = TaskListParserFactory.create();
 
@@ -37,12 +46,14 @@ public class ParserTests {
     }
 
     @Test
-    public void should_parse_list_title() throws ParserException {
+    public void should_stop_parsing_on_invalid_token() throws FileNotFoundException, ParserException {
         TaskListParser parser = TaskListParserFactory.create();
 
-        TaskList list = parser.parse(new StringReader(":: List title"));
-
-        assertThat(list, title().should(is("List title")));
+        assertTimeoutPreemptively(ofSeconds(3), () -> {
+            assertThrows(ParserException.class, () -> {
+                parser.parse(new FileReader("src/test/resources/should_stop_parsing_on_invalid_token.txk"));
+            }, "Invalid token: '__invalid__token__'");
+        });
     }
 
     @Test
@@ -57,6 +68,21 @@ public class ParserTests {
         assertThat(list, task(1).title().should(is("Second task")));
         assertThat(list, task(2).title().should(is("Third task")));
         assertThat(list, taskCount().should(is(3)));
+    }
+
+    @Test
+    public void should_parse_task_statuses() throws FileNotFoundException, ParserException {
+        TaskListParser parser = TaskListParserFactory.create();
+
+        TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_task_statuses.txk"));
+
+        assertThat(list, task(0).title().should(is("Open task")));
+        assertThat(list, task(0).status().should(is(OPEN)));
+
+        assertThat(list, task(1).title().should(is("Done task")));
+        assertThat(list, task(1).status().should(is(DONE)));
+
+        assertThat(list, taskCount().should(is(2)));
     }
 
     @Test
@@ -75,17 +101,6 @@ public class ParserTests {
         assertThat(list, task(1).tagCount().should(is(2)));
 
         assertThat(list, taskCount().should(is(2)));
-    }
-
-    @Test
-    public void should_stop_parsing_on_invalid_token() throws FileNotFoundException, ParserException {
-        TaskListParser parser = TaskListParserFactory.create();
-
-        assertTimeoutPreemptively(ofSeconds(3), () -> {
-            assertThrows(ParserException.class, () -> {
-                parser.parse(new FileReader("src/test/resources/should_stop_parsing_on_invalid_token.txk"));
-            }, "Invalid token: '__invalid__token__'");
-        });
     }
 
     @Test
@@ -116,21 +131,6 @@ public class ParserTests {
         assertThat(list, task(2).tagCount().should(is(2)));
 
         assertThat(list, taskCount().should(is(3)));
-    }
-
-    @Test
-    public void should_parse_task_statuses() throws FileNotFoundException, ParserException {
-        TaskListParser parser = TaskListParserFactory.create();
-
-        TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_task_statuses.txk"));
-
-        assertThat(list, task(0).title().should(is("Open task")));
-        assertThat(list, task(0).status().should(is(OPEN)));
-
-        assertThat(list, task(1).title().should(is("Done task")));
-        assertThat(list, task(1).status().should(is(DONE)));
-
-        assertThat(list, taskCount().should(is(2)));
     }
 
     @Test
