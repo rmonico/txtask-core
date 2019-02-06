@@ -10,9 +10,15 @@ public class ParserReader {
     private static final int DEFAULT_BUFFER_SIZE = 1024;
     private Reader source;
     private CharBuffer buffer;
+    private int position;
 
     public ParserReader(Reader source) {
         this.source = new BufferedReader(source);
+        this.position = 0;
+    }
+
+    public int position() {
+        return this.position;
     }
 
     public ParserReaderMatcher followed() {
@@ -61,6 +67,8 @@ public class ParserReader {
 
     void updateReaderPosition(int length) {
         this.buffer.position(this.buffer.position() + length);
+
+        this.position += length;
     }
 
 }
