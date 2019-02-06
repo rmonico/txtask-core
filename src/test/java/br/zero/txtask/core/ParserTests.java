@@ -116,15 +116,6 @@ public class ParserTests {
     }
 
     @Test
-    public void should_not_parse_list_with_invalid_header() throws ParserException {
-        TaskListParser parser = TaskListParserFactory.create();
-
-        ParserException exception = assertThrows(ParserException.class, () -> parser.parse(new StringReader("== Invalid list header, should be :: ")));
-
-        assertThat(exception.getMessage(), is("List must start with ':: '"));
-    }
-
-    @Test
     public void should_parse_task_statuses() throws FileNotFoundException, ParserException {
         TaskListParser parser = TaskListParserFactory.create();
 
