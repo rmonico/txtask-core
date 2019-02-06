@@ -1,73 +1,44 @@
-package br.zero.txtask.core.matchers;
+package br.zero.txtask.core.matcherfactory;
 
-import static br.zero.java.StringFormatter.ordinal;
-import static br.zero.java.StringFormatter.s;
+import static br.zero.matchers.FunctionalFeatureMatcherFactory.feature;
 
-import org.hamcrest.FeatureMatcher;
-import org.hamcrest.Matcher;
+import java.util.function.Function;
 
+import br.zero.matchers.FunctionalFeatureMatcherFactory;
 import br.zero.txtask.core.model.Status;
 import br.zero.txtask.core.model.Task;
-import br.zero.txtask.core.model.TaskList;
+import br.zero.txtask.core.model.TaskContainer;
 
-public class TaskMatchers {
+public class TaskMatcherFactory {
 
-    private int itemIndex;
+    private Function<TaskContainer, Task> itemExtractor;
 
-    public TaskMatchers(int listIndex) {
-        this.itemIndex = listIndex;
+    public TaskMatcherFactory(Function<TaskContainer, Task> itemExtractor) {
+        this.itemExtractor = itemExtractor;
     }
 
-    protected abstract static class TaskFeatureMatcher<U> extends FeatureMatcher<TaskList, U> {
-
-        private int taskIndex;
-
-        public TaskFeatureMatcher(Matcher<U> subMatcher, String featureName, int taskIndex) {
-            super(subMatcher, s("%s of %s task").format(featureName, ordinal(taskIndex)), featureName);
-            this.taskIndex = taskIndex;
-        }
-
-        @Override
-        protected U featureValueOf(TaskList actual) {
-            return this.featureOfTask(actual.getTasks().get(this.taskIndex));
-
-        }
-
-        protected abstract U featureOfTask(Task task);
+    public FunctionalFeatureMatcherFactory<? super TaskContainer, String> title() {
+        return feature((TaskContainer container) -> itemExtractor.apply(container).getTitle()).description("task's title").name("title");
     }
 
-    public Matcher<TaskList> title(Matcher<String> titleMatcher) {
-        return new TaskFeatureMatcher<String>(titleMatcher, "title", this.itemIndex) {
-
-            @Override
-            protected String featureOfTask(Task actual) {
-                return actual.getTitle();
-            }
-        };
+    public TagMatcherFactory tag(int index) {
+        return new TagMatcherFactory(c -> itemExtractor.apply(c).getTags().get(index));
     }
 
-    public Matcher<TaskList> status(Matcher<Status> statusMatcher) {
-        return new TaskFeatureMatcher<Status>(statusMatcher, "status", this.itemIndex) {
-
-            @Override
-            protected Status featureOfTask(Task actual) {
-                return actual.getStatus();
-            }
-        };
-
+    public FunctionalFeatureMatcherFactory<? super TaskContainer, Integer> tagCount() {
+        return feature((TaskContainer container) -> itemExtractor.apply(container).getTags().size()).description("tags's list size").name("size");
     }
 
-    public Matcher<TaskList> tagCount(Matcher<Integer> tagCountMatcher) {
-        return new TaskFeatureMatcher<Integer>(tagCountMatcher, "tag count", this.itemIndex) {
-
-            @Override
-            protected Integer featureOfTask(Task task) {
-                return task.getTags().size();
-            }
-        };
+    public TaskMatcherFactory task(int index) {
+        return new TaskMatcherFactory(c -> itemExtractor.apply(c).getTasks().get(index));
     }
 
-    public TagMatchers tag(int tagIndex) {
-        return new TagMatchers(this.itemIndex, tagIndex);
+    public FunctionalFeatureMatcherFactory<? super TaskContainer, Integer> taskCount() {
+        return feature((TaskContainer container) -> itemExtractor.apply(container).getTasks().size()).description("tasks's list size").name("size");
     }
+
+    public FunctionalFeatureMatcherFactory<? super TaskContainer, Status> status() {
+        return feature((TaskContainer container) -> itemExtractor.apply(container).getStatus()).description("task's status").name("status");
+    }
+
 }

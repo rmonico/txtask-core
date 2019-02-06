@@ -1,46 +1,26 @@
-package br.zero.txtask.core.matchers;
+package br.zero.txtask.core.matcherfactory;
 
-import static br.zero.java.StringFormatter.ordinal;
-import static br.zero.java.StringFormatter.s;
+import static br.zero.matchers.FunctionalFeatureMatcherFactory.feature;
 
-import org.hamcrest.Matcher;
+import java.util.function.Function;
 
-import br.zero.txtask.core.matchers.TaskMatchers.TaskFeatureMatcher;
+import br.zero.matchers.FunctionalFeatureMatcherFactory;
 import br.zero.txtask.core.model.Tag;
-import br.zero.txtask.core.model.Task;
-import br.zero.txtask.core.model.TaskList;
+import br.zero.txtask.core.model.TaskContainer;
 
-public class TagMatchers {
-    private int taskIndex;
-    private int tagIndex;
+public class TagMatcherFactory {
 
-    public TagMatchers(int taskIndex, int tagIndex) {
-        this.taskIndex = taskIndex;
-        this.tagIndex = tagIndex;
+	private Function<TaskContainer, Tag> extractor;
+
+    public TagMatcherFactory(Function<TaskContainer, Tag> extractor) {
+        this.extractor = extractor;
+	}
+
+    public FunctionalFeatureMatcherFactory<TaskContainer, String> name() {
+        return tagFeature(Tag::getName).description("Tag name").name("name");
     }
 
-    protected static abstract class TagFeatureMatcher<U> extends TaskFeatureMatcher<U> {
-        private int tagIndex;
-
-        public TagFeatureMatcher(Matcher<U> subMatcher, String featureName, int taskIndex, int tagIndex) {
-            super(subMatcher, s("%s of %s tag").format(featureName, ordinal(tagIndex), ordinal(taskIndex)), taskIndex);
-            this.tagIndex = tagIndex;
-        }
-
-        @Override
-        protected U featureOfTask(Task task) {
-            return this.featureOfTag(task.getTags().get(tagIndex));
-        }
-
-        protected abstract U featureOfTag(Tag tag);
-    }
-
-    public Matcher<TaskList> name(Matcher<String> tagNameMatcher) {
-        return new TagFeatureMatcher<String>(tagNameMatcher, "name", taskIndex, tagIndex) {
-            protected String featureOfTag(Tag tag) {
-                return tag.getName();
-            }
-
-        };
+    private <T> FunctionalFeatureMatcherFactory<TaskContainer, T> tagFeature(Function<Tag, T> tagExtractor) {
+        return feature((TaskContainer c) -> tagExtractor.apply(extractor.apply(c)));
     }
 }
