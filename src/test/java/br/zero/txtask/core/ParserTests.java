@@ -46,6 +46,15 @@ public class ParserTests {
     }
 
     @Test
+    public void should_always_start_with_list_title() {
+        TaskListParser parser = TaskListParserFactory.create();
+
+        ParserException exception = assertThrows(ParserException.class, () -> parser.parse(new StringReader("- Task on first line")));
+
+        assertThat(exception.getMessage(), is("List title must start with ':: '"));
+    }
+
+    @Test
     public void should_stop_parsing_on_invalid_token() throws FileNotFoundException, ParserException {
         TaskListParser parser = TaskListParserFactory.create();
 
