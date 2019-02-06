@@ -6,9 +6,9 @@ import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.parser.element.ElementParser;
 import br.zero.txtask.core.parser.element.abstracttag.AbstractTagMatcher;
 
-public class TagGroupMatcher extends AbstractTagMatcher {
+public class TagGroupScope extends AbstractTagMatcher {
 
-    public TagGroupMatcher() {
+    public TagGroupScope() {
         super(IMPLICIT_TAG_INITIAL_PREFIX);
     }
 
