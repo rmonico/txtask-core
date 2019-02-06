@@ -3,7 +3,6 @@ package br.zero.txtask.core.parser.element.abstracttag;
 import java.io.IOException;
 
 import br.zero.txtask.core.model.Tag;
-import br.zero.txtask.core.parser.ParserContext;
 import br.zero.txtask.core.parser.ParserException;
 import br.zero.txtask.core.parser.element.ElementMatcher;
 import br.zero.txtask.core.parser.element.ElementParser;
@@ -22,8 +21,7 @@ public abstract class AbstractTagMatcher implements ElementMatcher<Tag> {
     protected abstract ElementParser<Tag> makeParser();
 
     @Override
-    public boolean matchs(ParserReader reader,
-            ParserContext context) throws ParserException, IOException {
+    public boolean matchs(ParserReader reader) throws ParserException, IOException {
         return reader.followed().by(this.tagPrefix).go();
     }
 

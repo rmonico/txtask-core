@@ -13,7 +13,6 @@ import br.zero.txtask.core.model.Status;
 import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.model.Task;
 import br.zero.txtask.core.model.TaskList;
-import br.zero.txtask.core.parser.ParserContext;
 import br.zero.txtask.core.parser.ParserException;
 import br.zero.txtask.core.parser.element.AbstractElementParser;
 import br.zero.txtask.core.parser.reader.ParserReader;
@@ -83,7 +82,6 @@ public class TaskParser extends AbstractElementParser<Task> {
 
     @Override
     protected void internalPut(TaskList taskList,
-            ParserContext context,
             Task task) {
         taskList.getTasks().add(task);
 

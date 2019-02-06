@@ -5,7 +5,6 @@ import static br.zero.txtask.core.parser.element.task.Constants.TASK_STATUSES_AR
 import java.io.IOException;
 
 import br.zero.txtask.core.model.Task;
-import br.zero.txtask.core.parser.ParserContext;
 import br.zero.txtask.core.parser.ParserException;
 import br.zero.txtask.core.parser.element.ElementMatcher;
 import br.zero.txtask.core.parser.element.ElementParser;
@@ -20,8 +19,7 @@ public class TaskMatcher implements ElementMatcher<Task> {
     }
 
     @Override
-    public boolean matchs(ParserReader reader,
-            ParserContext context) throws ParserException, IOException {
+    public boolean matchs(ParserReader reader) throws ParserException, IOException {
         return reader.followed().byAnyOf(TASK_STATUSES_ARRAY).which() > -1;
     }
 

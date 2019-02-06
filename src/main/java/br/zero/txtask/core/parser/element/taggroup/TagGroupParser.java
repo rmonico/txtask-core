@@ -23,9 +23,8 @@ public class TagGroupParser extends AbstractTagParser {
 
     @Override
     protected void internalPut(TaskList taskList,
-            ParserContext context,
             Tag element) {
-        
+
     }
 
 }

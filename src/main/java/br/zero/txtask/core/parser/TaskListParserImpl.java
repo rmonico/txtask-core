@@ -30,8 +30,6 @@ class TaskListParserImpl implements TaskListParser {
     private TaskList internalParse(ParserReader reader) throws ParserException, IOException {
         TaskList taskList = new TaskList();
 
-        ParserContext context = new ParserContext();
-
         ElementParserAbstractFactory parserFactory = new ElementParserAbstractFactory();
 
         while (!reader.finished()) {

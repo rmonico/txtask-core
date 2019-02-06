@@ -6,7 +6,6 @@ import static br.zero.txtask.core.parser.element.listtitle.Constants.LIST_TITLE_
 
 import java.io.IOException;
 
-import br.zero.txtask.core.parser.ParserContext;
 import br.zero.txtask.core.parser.ParserException;
 import br.zero.txtask.core.parser.element.ElementMatcher;
 import br.zero.txtask.core.parser.element.ElementParser;

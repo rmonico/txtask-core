@@ -5,7 +5,6 @@ import static br.zero.txtask.core.parser.element.listtitle.Constants.LIST_TITLE_
 import java.io.IOException;
 
 import br.zero.txtask.core.model.TaskList;
-import br.zero.txtask.core.parser.ParserContext;
 import br.zero.txtask.core.parser.ParserException;
 import br.zero.txtask.core.parser.element.AbstractElementParser;
 import br.zero.txtask.core.parser.reader.ParserReader;
@@ -27,7 +26,6 @@ public class ListTitleParser extends AbstractElementParser<String> {
 
     @Override
     public void internalPut(TaskList taskList,
-            ParserContext context,
             String title) {
         taskList.setTitle(title);
     }
