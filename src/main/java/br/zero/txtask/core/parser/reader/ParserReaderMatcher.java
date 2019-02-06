@@ -1,8 +1,8 @@
-package br.zero.txtask.core.parser;
+package br.zero.txtask.core.parser.reader;
 
 import java.io.IOException;
 
-class ParserReaderMatcher {
+public class ParserReaderMatcher {
 
     private ParserReader reader;
     private String[] values;

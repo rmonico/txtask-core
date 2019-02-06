@@ -1,4 +1,4 @@
-package br.zero.txtask.core.parser;
+package br.zero.txtask.core.parser.reader;
 
 import static java.util.Arrays.asList;
 
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-class ParserReaderGetter {
+public class ParserReaderGetter {
 
     private ParserReader reader;
     private Integer charCount;
