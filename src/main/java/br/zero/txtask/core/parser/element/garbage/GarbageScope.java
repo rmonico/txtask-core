@@ -7,11 +7,11 @@ import br.zero.txtask.core.parser.element.ElementMatcher;
 import br.zero.txtask.core.parser.element.ElementParser;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
-public class GarbageMatcher implements ElementMatcher<String> {
+public class GarbageScope implements ElementMatcher<String> {
 
     private ElementParser<String> parser;
 
-    public GarbageMatcher() {
+    public GarbageScope() {
         parser = new GarbageParser();
     }
 
