@@ -5,7 +5,7 @@
 
 ##parser ##v0.1
 x List title
-  - Just on first line #restriction #future
+  x Just on first line #restriction #future
   - Comments of list #future
 x Task title
   x Without sharp char #restriction #future
@@ -14,10 +14,10 @@ x Task tag
   x Allow regex "[a-z_][a-z0-9_\.]*" #restriction #future
 x Implicit tags
 - Subtasks
-- Long comments
+- Short comments
   - Indented on subtasks #restriction #future
   - Append when consecutive comments are found #future
-- Short comments
+- Long comments
   - Indented on subtasks #restriction #future
   - Append when consecutive comments are found #future
 x Task status
