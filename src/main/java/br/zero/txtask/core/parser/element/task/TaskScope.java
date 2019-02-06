@@ -10,11 +10,11 @@ import br.zero.txtask.core.parser.element.ElementMatcher;
 import br.zero.txtask.core.parser.element.ElementParser;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
-public class TaskMatcher implements ElementMatcher<Task> {
+public class TaskScope implements ElementMatcher<Task> {
 
     private TaskParser parser;
 
-    public TaskMatcher() {
+    public TaskScope() {
         this.parser = new TaskParser();
     }
 
