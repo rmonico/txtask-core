@@ -38,20 +38,6 @@ class TaskListParserImpl implements TaskListParser {
             desc.consumer.accept(element);
         }
 
-//        while (!reader.finished()) {
-//            } else if (reader.followed().by(IMPLICIT_TAG_INITIAL_PREFIX).go()) {
-//                parseTags(reader, tag -> context.implicitTags().add(tag), IMPLICIT_TAG_INITIAL_PREFIX, IMPLICIT_TAG_PREFIX);
-//            } else if (reader.followed().by(IMPLICIT_TAG_REMOVAL_INITIAL_PREFIX).go()) {
-//                parseTags(reader, tag -> context.implicitTags().remove(tag), IMPLICIT_TAG_REMOVAL_INITIAL_PREFIX, IMPLICIT_TAG_REMOVAL_PREFIX);
-//            } else if (reader.followed().byEol().go()) {
-//                reader.consume().next(1).go();
-//            } else {
-//                String nextToken = reader.consume().until(" ").or().eol().go();
-//
-//                throw new ParserException(s("Invalid token: '%s'").format(nextToken));
-//            }
-//        }
-
         return scope.getTaskList();
     }
 
