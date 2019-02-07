@@ -2,11 +2,14 @@ package br.zero.txtask.core.parser;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.function.Consumer;
 
 import br.zero.txtask.core.model.TaskList;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
 class TaskListParserImpl implements TaskListParser {
+
+    private TaskList taskList;
 
     @Override
     public TaskList parse(Reader source) throws ParserException {
@@ -26,18 +29,22 @@ class TaskListParserImpl implements TaskListParser {
     }
 
     private TaskList internalParse(ParserReader reader) throws ParserException, IOException {
-        TaskListScope mainScope = new TaskListScope();
+        TaskListScope mainScope = new TaskListScope(t -> taskList = t);
+
+        Scope<?> scope = mainScope;
 
         while (!reader.finished()) {
-            @SuppressWarnings("unchecked")
-            Scope<Object> scope = (Scope<Object>) mainScope.findParser(reader);
+            scope = scope.findScope(reader);
 
             Object element = scope.getParser().parse(reader);
 
-            scope.getConsumer().accept(element);
+            @SuppressWarnings("unchecked")
+            Consumer<Object> consumer = (Consumer<Object>) scope.getConsumer();
+
+            consumer.accept(element);
         }
 
-        return mainScope.getTaskList();
+        return this.taskList;
     }
 
 }
