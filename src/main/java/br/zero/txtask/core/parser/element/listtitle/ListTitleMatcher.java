@@ -8,7 +8,7 @@ import br.zero.txtask.core.parser.ParserException;
 import br.zero.txtask.core.parser.element.ElementMatcher;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
-public class ListTitleMatcher implements ElementMatcher<String> {
+public class ListTitleMatcher implements ElementMatcher {
 
     @Override
     public boolean matchs(ParserReader reader) throws ParserException, IOException {

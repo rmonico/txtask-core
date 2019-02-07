@@ -2,12 +2,11 @@ package br.zero.txtask.core.parser.element.abstracttag;
 
 import java.io.IOException;
 
-import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.parser.ParserException;
 import br.zero.txtask.core.parser.element.ElementMatcher;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
-public abstract class AbstractTagMatcher implements ElementMatcher<Tag> {
+public abstract class AbstractTagMatcher implements ElementMatcher {
 
     private String tagPrefix;
 

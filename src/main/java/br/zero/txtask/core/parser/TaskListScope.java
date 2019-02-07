@@ -30,11 +30,11 @@ public class TaskListScope {
 
     public static class ElementDescription<T> {
 
-        public ElementMatcher<T> matcher;
+        public ElementMatcher matcher;
         public ElementParser<T> parser;
         public Consumer<T> consumer;
 
-        public ElementDescription(ElementMatcher<T> matcher, ElementParser<T> parser, Consumer<T> consumer) {
+        public ElementDescription(ElementMatcher matcher, ElementParser<T> parser, Consumer<T> consumer) {
             this.matcher = matcher;
             this.parser = parser;
             this.consumer = consumer;
@@ -42,7 +42,7 @@ public class TaskListScope {
 
     }
 
-    private <T> ElementDescription<T> createDescription(ElementMatcher<T> matcher,
+    private <T> ElementDescription<T> createDescription(ElementMatcher matcher,
             ElementParser<T> parser,
             Consumer<T> consumer) {
         return new ElementDescription<T>(matcher, parser, consumer);
