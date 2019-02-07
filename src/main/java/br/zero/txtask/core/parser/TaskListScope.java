@@ -1,8 +1,7 @@
 package br.zero.txtask.core.parser;
 
-import static br.zero.txtask.core.parser.Scope.createDescription;
-
 import java.io.IOException;
+import java.util.function.Consumer;
 
 import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.model.Task;
@@ -11,32 +10,34 @@ import br.zero.txtask.core.parser.element.blankline.EmptyLineParser;
 import br.zero.txtask.core.parser.element.blankline.EmptyLineScope;
 import br.zero.txtask.core.parser.element.garbage.GarbageParser;
 import br.zero.txtask.core.parser.element.garbage.GarbageScope;
-import br.zero.txtask.core.parser.element.listtitle.ListTitleMatcher;
-import br.zero.txtask.core.parser.element.listtitle.ListTitleParser;
+import br.zero.txtask.core.parser.element.listtitle.ListTitleScope;
 import br.zero.txtask.core.parser.element.taggroup.TagGroupParser;
 import br.zero.txtask.core.parser.element.taggroup.TagGroupScope;
+import br.zero.txtask.core.parser.element.task.RootTaskScope;
 import br.zero.txtask.core.parser.element.task.TaskParser;
 import br.zero.txtask.core.parser.element.task.TaskScope;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
-public class TaskListScope {
+public class TaskListScope extends AbstractScope<TaskList> {
 
     private TaskList taskList;
 
-    public TaskListScope() {
+    public TaskListScope(Consumer<TaskList> consumer) {
+        super(null, null, consumer);
         this.taskList = new TaskList();
     }
 
     private Scope<String> createListTitleDescription() {
-        return createDescription(new ListTitleMatcher(), new ListTitleParser(), this::setListTitle);
+        return new ListTitleScope(this::setListTitle);
     }
 
     private Scope<Task> createRootTaskDescription() {
-        return createDescription(new TaskScope(), new TaskParser(), this::addRootTask);
+        return new RootTaskScope(this::addRootTask);
     }
 
     private Scope<Tag> createTagGroupDescription() {
-        return createDescription(new TagGroupScope(), new TagGroupParser(), this::addImplicitTag);
+//        return new TagGroupScope(this::addImplicitTag);
+//        return createDescription(new TagGroupScope(), new TagGroupParser(), this::addImplicitTag);
     }
 
     private Scope<String> createEmptyLineDescription() {
@@ -55,7 +56,7 @@ public class TaskListScope {
         }
     }
 
-    public Scope<?> findParser(ParserReader reader) throws ParserException, IOException {
+    public Scope<?> findScope(ParserReader reader) throws ParserException, IOException {
         for (Scope<?> description : getPossibleMatchers(reader))
             if (description.getMatcher().matchs(reader)) {
                 return description;
@@ -85,10 +86,6 @@ public class TaskListScope {
     }
 
     public void addGarbageLine(String garbage) {
-    }
-
-    public TaskList getTaskList() {
-        return this.taskList;
     }
 
 }
