@@ -12,7 +12,7 @@ import br.zero.txtask.core.parser.element.garbage.GarbageParser;
 import br.zero.txtask.core.parser.element.garbage.GarbageScope;
 import br.zero.txtask.core.parser.element.listtitle.ListTitleScope;
 import br.zero.txtask.core.parser.element.taggroup.TagGroupParser;
-import br.zero.txtask.core.parser.element.taggroup.TagGroupScope;
+import br.zero.txtask.core.parser.element.taggroup.TagGroupMatcher;
 import br.zero.txtask.core.parser.element.task.RootTaskScope;
 import br.zero.txtask.core.parser.element.task.TaskParser;
 import br.zero.txtask.core.parser.element.task.TaskScope;

@@ -4,9 +4,9 @@ import static br.zero.txtask.core.parser.element.abstracttag.Constants.IMPLICIT_
 
 import br.zero.txtask.core.parser.element.abstracttag.AbstractTagMatcher;
 
-public class TagGroupScope extends AbstractTagMatcher {
+public class TagGroupMatcher extends AbstractTagMatcher {
 
-    public TagGroupScope() {
+    public TagGroupMatcher() {
         super(IMPLICIT_TAG_INITIAL_PREFIX);
     }
 
