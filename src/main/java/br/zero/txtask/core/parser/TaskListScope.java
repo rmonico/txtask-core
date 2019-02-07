@@ -28,20 +28,6 @@ public class TaskListScope {
         this.taskList = new TaskList();
     }
 
-    public static class ElementDescription<T> {
-
-        public ElementMatcher matcher;
-        public ElementParser<T> parser;
-        public Consumer<T> consumer;
-
-        public ElementDescription(ElementMatcher matcher, ElementParser<T> parser, Consumer<T> consumer) {
-            this.matcher = matcher;
-            this.parser = parser;
-            this.consumer = consumer;
-        }
-
-    }
-
     private <T> ElementDescription<T> createDescription(ElementMatcher matcher,
             ElementParser<T> parser,
             Consumer<T> consumer) {

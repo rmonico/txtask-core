@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Reader;
 
 import br.zero.txtask.core.model.TaskList;
-import br.zero.txtask.core.parser.TaskListScope.ElementDescription;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
 class TaskListParserImpl implements TaskListParser {
