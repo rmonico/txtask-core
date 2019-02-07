@@ -24,31 +24,31 @@ public class TaskListScope extends AbstractScope<TaskList> {
         parser.setTaskList(this.taskList);
     }
 
-    private Scope<String> createListTitleDescription() {
+    private Scope<String> newListTitleScope() {
         return new ListTitleScope(this::setListTitle);
     }
 
-    private Scope<Task> createRootTaskDescription() {
+    private Scope<Task> newRootTaskScope() {
         return new RootTaskScope(this::addRootTask);
     }
 
-    private Scope<Tag> createTagGroupDescription() {
+    private Scope<Tag> newTagGroupScope() {
         return new TagGroupScope(this::addImplicitTag);
     }
 
-    private Scope<String> createEmptyLineDescription() {
+    private Scope<String> newEmptyLineScope() {
         return new EmptyLineScope(this::addEmptyLine);
     }
 
-    private Scope<String> createGarbageLineDescription() {
+    private Scope<String> newGarbageLineScope() {
         return new GarbageScope(this::addGarbageLine);
     }
 
     public Scope<?>[] getPossibleMatchers(ParserReader reader) {
         if (reader.position() == 0) {
-            return new Scope<?>[] { createListTitleDescription() };
+            return new Scope<?>[] { newListTitleScope() };
         } else {
-            return new Scope<?>[] { createRootTaskDescription(), createTagGroupDescription(), createEmptyLineDescription(), createGarbageLineDescription() };
+            return new Scope<?>[] { newRootTaskScope(), newTagGroupScope(), newEmptyLineScope(), newGarbageLineScope() };
         }
     }
 
