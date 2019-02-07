@@ -17,4 +17,10 @@ public class ElementDescription<T> {
         this.consumer = consumer;
     }
 
+    public static <T> ElementDescription<T> createDescription(ElementMatcher matcher,
+            ElementParser<T> parser,
+            Consumer<T> consumer) {
+        return new ElementDescription<T>(matcher, parser, consumer);
+    }
+
 }

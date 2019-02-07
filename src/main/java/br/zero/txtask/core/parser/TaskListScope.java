@@ -1,13 +1,12 @@
 package br.zero.txtask.core.parser;
 
+import static br.zero.txtask.core.parser.ElementDescription.createDescription;
+
 import java.io.IOException;
-import java.util.function.Consumer;
 
 import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.model.Task;
 import br.zero.txtask.core.model.TaskList;
-import br.zero.txtask.core.parser.element.ElementMatcher;
-import br.zero.txtask.core.parser.element.ElementParser;
 import br.zero.txtask.core.parser.element.blankline.EmptyLineParser;
 import br.zero.txtask.core.parser.element.blankline.EmptyLineScope;
 import br.zero.txtask.core.parser.element.garbage.GarbageParser;
@@ -26,12 +25,6 @@ public class TaskListScope {
 
     public TaskListScope() {
         this.taskList = new TaskList();
-    }
-
-    private <T> ElementDescription<T> createDescription(ElementMatcher matcher,
-            ElementParser<T> parser,
-            Consumer<T> consumer) {
-        return new ElementDescription<T>(matcher, parser, consumer);
     }
 
     private ElementDescription<String> createListTitleDescription() {
