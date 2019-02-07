@@ -1,7 +1,5 @@
 package br.zero.txtask.core.parser.element.listtitle;
 
-import static br.zero.java.StringFormatter.s;
-import static br.zero.txtask.core.parser.ParsingStep.TASK_TITLE;
 import static br.zero.txtask.core.parser.element.listtitle.Constants.LIST_TITLE_PREFIX;
 
 import java.io.IOException;
@@ -20,16 +18,8 @@ public class ListTitleMatcher implements ElementMatcher<String> {
     }
 
     @Override
-    public boolean matchs(ParserReader reader,
-            ParserContext context) throws ParserException, IOException {
-        boolean titleFollow = reader.followed().by(LIST_TITLE_PREFIX).go();
-
-        if (context.step().equals(TASK_TITLE))
-            return titleFollow;
-        else if (titleFollow)
-            throw new ParserException(s("List must start with '%s'").format(LIST_TITLE_PREFIX));
-        else
-            return false;
+    public boolean matchs(ParserReader reader) throws ParserException, IOException {
+        return reader.followed().by(LIST_TITLE_PREFIX).go();
     }
 
     @Override
