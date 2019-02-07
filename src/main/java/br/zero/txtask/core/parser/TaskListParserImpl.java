@@ -32,9 +32,9 @@ class TaskListParserImpl implements TaskListParser {
             @SuppressWarnings("unchecked")
             ElementDescription<Object> desc = (ElementDescription<Object>) scope.findParser(reader);
 
-            Object element = desc.parser.parse(reader);
+            Object element = desc.getParser().parse(reader);
 
-            desc.consumer.accept(element);
+            desc.getConsumer().accept(element);
         }
 
         return scope.getTaskList();

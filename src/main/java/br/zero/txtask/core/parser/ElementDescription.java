@@ -7,9 +7,9 @@ import br.zero.txtask.core.parser.element.ElementParser;
 
 public class ElementDescription<T> {
 
-    public ElementMatcher matcher;
-    public ElementParser<T> parser;
-    public Consumer<T> consumer;
+    private ElementMatcher matcher;
+    private ElementParser<T> parser;
+    private Consumer<T> consumer;
 
     public ElementDescription(ElementMatcher matcher, ElementParser<T> parser, Consumer<T> consumer) {
         this.matcher = matcher;
@@ -21,6 +21,18 @@ public class ElementDescription<T> {
             ElementParser<T> parser,
             Consumer<T> consumer) {
         return new ElementDescription<T>(matcher, parser, consumer);
+    }
+
+    public ElementMatcher getMatcher() {
+        return matcher;
+    }
+
+    public ElementParser<T> getParser() {
+        return parser;
+    }
+
+    public Consumer<T> getConsumer() {
+        return consumer;
     }
 
 }

@@ -57,7 +57,7 @@ public class TaskListScope {
 
     public ElementDescription<?> findParser(ParserReader reader) throws ParserException, IOException {
         for (ElementDescription<?> description : getPossibleMatchers(reader))
-            if (description.matcher.matchs(reader)) {
+            if (description.getMatcher().matchs(reader)) {
                 return description;
             }
 
