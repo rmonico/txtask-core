@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 import br.zero.txtask.core.parser.element.ElementMatcher;
 import br.zero.txtask.core.parser.element.ElementParser;
 
-public class AbstractScope<T> implements Scope<T> {
+public abstract class AbstractScope<T> implements Scope<T> {
 
     private ElementMatcher matcher;
     private ElementParser<T> parser;
