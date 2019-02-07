@@ -12,7 +12,7 @@ import br.zero.txtask.core.parser.reader.ParserReader;
 public class RootTaskScope extends AbstractScope<Task> {
 
     public RootTaskScope(Consumer<Task> destination) {
-        super(new TaskScope(), new TaskParser(), destination);
+        super(new TaskMatcher(), new TaskParser(), destination);
     }
 
     @Override
