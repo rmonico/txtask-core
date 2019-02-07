@@ -26,18 +26,18 @@ class TaskListParserImpl implements TaskListParser {
     }
 
     private TaskList internalParse(ParserReader reader) throws ParserException, IOException {
-        TaskListScope scope = new TaskListScope();
+        TaskListScope mainScope = new TaskListScope();
 
         while (!reader.finished()) {
             @SuppressWarnings("unchecked")
-            Scope<Object> desc = (Scope<Object>) scope.findParser(reader);
+            Scope<Object> scope = (Scope<Object>) mainScope.findParser(reader);
 
-            Object element = desc.getParser().parse(reader);
+            Object element = scope.getParser().parse(reader);
 
-            desc.getConsumer().accept(element);
+            scope.getConsumer().accept(element);
         }
 
-        return scope.getTaskList();
+        return mainScope.getTaskList();
     }
 
 }
