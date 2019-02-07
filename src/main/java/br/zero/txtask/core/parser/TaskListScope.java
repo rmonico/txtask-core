@@ -1,7 +1,6 @@
 package br.zero.txtask.core.parser;
 
 import java.io.IOException;
-import java.util.function.Consumer;
 
 import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.model.Task;
@@ -22,9 +21,12 @@ public class TaskListScope extends AbstractScope<TaskList> {
 
     private TaskList taskList;
 
-    public TaskListScope(Consumer<TaskList> consumer) {
-        super(null, null, consumer);
+    public TaskListScope() {
+        super(null, new InternalTaskListParser(), null);
+
+        InternalTaskListParser parser = (InternalTaskListParser) getParser();
         this.taskList = new TaskList();
+        parser.setTaskList(this.taskList);
     }
 
     private Scope<String> createListTitleDescription() {
@@ -79,7 +81,6 @@ public class TaskListScope extends AbstractScope<TaskList> {
     }
 
     public void addImplicitTag(Tag tag) {
-
     }
 
     public void addEmptyLine(String emptyLine) {

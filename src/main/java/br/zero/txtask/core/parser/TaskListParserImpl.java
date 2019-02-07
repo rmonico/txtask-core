@@ -9,8 +9,6 @@ import br.zero.txtask.core.parser.reader.ParserReader;
 
 class TaskListParserImpl implements TaskListParser {
 
-    private TaskList taskList;
-
     @Override
     public TaskList parse(Reader source) throws ParserException {
         ParserReader parserReader = new ParserReader(source);
@@ -29,7 +27,7 @@ class TaskListParserImpl implements TaskListParser {
     }
 
     private TaskList internalParse(ParserReader reader) throws ParserException, IOException {
-        TaskListScope mainScope = new TaskListScope(t -> taskList = t);
+        TaskListScope mainScope = new TaskListScope();
 
         Scope<?> scope = mainScope;
 
@@ -44,7 +42,7 @@ class TaskListParserImpl implements TaskListParser {
             consumer.accept(element);
         }
 
-        return this.taskList;
+        return mainScope.getParser().parse(reader);
     }
 
 }
