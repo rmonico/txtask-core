@@ -9,5 +9,4 @@ public interface ElementMatcher<ELEMENTTYPE> {
 
     public boolean matchs(ParserReader reader) throws ParserException, IOException;
 
-    public ElementParser<ELEMENTTYPE> getParser();
 }
