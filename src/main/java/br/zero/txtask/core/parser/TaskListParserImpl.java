@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 import br.zero.txtask.core.model.TaskList;
-import br.zero.txtask.core.parser.element.ElementParser;
-import br.zero.txtask.core.parser.element.ElementParserAbstractFactory;
+import br.zero.txtask.core.parser.TaskListScope.ElementDescription;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
 class TaskListParserImpl implements TaskListParser {
@@ -28,16 +27,15 @@ class TaskListParserImpl implements TaskListParser {
     }
 
     private TaskList internalParse(ParserReader reader) throws ParserException, IOException {
-        TaskList taskList = new TaskList();
-
-        ElementParserAbstractFactory parserFactory = new ElementParserAbstractFactory();
+        TaskListScope scope = new TaskListScope();
 
         while (!reader.finished()) {
-            ElementParser<?> parser = parserFactory.getNextParser(reader, context);
+            @SuppressWarnings("unchecked")
+            ElementDescription<Object> desc = (ElementDescription<Object>) scope.findParser(reader);
 
-            Object element = parser.parse(reader);
+            Object element = desc.parser.parse(reader);
 
-            parser.put(taskList, context, element);
+            desc.consumer.accept(element);
         }
 
 //        while (!reader.finished()) {
@@ -54,7 +52,7 @@ class TaskListParserImpl implements TaskListParser {
 //            }
 //        }
 
-        return taskList;
+        return scope.getTaskList();
     }
 
 }
