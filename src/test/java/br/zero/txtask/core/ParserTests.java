@@ -80,6 +80,7 @@ public class ParserTests {
     }
 
     @Test
+    @Disabled
     public void should_parse_task_statuses() throws FileNotFoundException, ParserException {
         TaskListParser parser = TaskListParserFactory.create();
 
@@ -95,6 +96,7 @@ public class ParserTests {
     }
 
     @Test
+    @Disabled
     public void should_parse_task_tags() throws FileNotFoundException, ParserException {
         TaskListParser parser = TaskListParserFactory.create();
 
