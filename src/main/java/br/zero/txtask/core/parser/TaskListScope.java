@@ -5,16 +5,11 @@ import java.io.IOException;
 import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.model.Task;
 import br.zero.txtask.core.model.TaskList;
-import br.zero.txtask.core.parser.element.blankline.EmptyLineParser;
-import br.zero.txtask.core.parser.element.blankline.EmptyLineMatcher;
-import br.zero.txtask.core.parser.element.garbage.GarbageParser;
-import br.zero.txtask.core.parser.element.garbage.GarbageMatcher;
+import br.zero.txtask.core.parser.element.blankline.EmptyLineScope;
+import br.zero.txtask.core.parser.element.garbage.GarbageScope;
 import br.zero.txtask.core.parser.element.listtitle.ListTitleScope;
-import br.zero.txtask.core.parser.element.taggroup.TagGroupParser;
-import br.zero.txtask.core.parser.element.taggroup.TagGroupMatcher;
+import br.zero.txtask.core.parser.element.taggroup.TagGroupScope;
 import br.zero.txtask.core.parser.element.task.RootTaskScope;
-import br.zero.txtask.core.parser.element.task.TaskParser;
-import br.zero.txtask.core.parser.element.task.TaskMatcher;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
 public class TaskListScope extends AbstractScope<TaskList> {
@@ -38,16 +33,15 @@ public class TaskListScope extends AbstractScope<TaskList> {
     }
 
     private Scope<Tag> createTagGroupDescription() {
-//        return new TagGroupScope(this::addImplicitTag);
-//        return createDescription(new TagGroupScope(), new TagGroupParser(), this::addImplicitTag);
+        return new TagGroupScope(this::addImplicitTag);
     }
 
     private Scope<String> createEmptyLineDescription() {
-        return createDescription(new EmptyLineMatcher(), new EmptyLineParser(), this::addEmptyLine);
+        return new EmptyLineScope(this::addEmptyLine);
     }
 
     private Scope<String> createGarbageLineDescription() {
-        return createDescription(new GarbageMatcher(), new GarbageParser(), this::addGarbageLine);
+        return new GarbageScope(this::addGarbageLine);
     }
 
     public Scope<?>[] getPossibleMatchers(ParserReader reader) {
