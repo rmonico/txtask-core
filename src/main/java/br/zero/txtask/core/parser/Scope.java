@@ -5,22 +5,22 @@ import java.util.function.Consumer;
 import br.zero.txtask.core.parser.element.ElementMatcher;
 import br.zero.txtask.core.parser.element.ElementParser;
 
-public class ElementDescription<T> {
+public class Scope<T> {
 
     private ElementMatcher matcher;
     private ElementParser<T> parser;
     private Consumer<T> consumer;
 
-    public ElementDescription(ElementMatcher matcher, ElementParser<T> parser, Consumer<T> consumer) {
+    public Scope(ElementMatcher matcher, ElementParser<T> parser, Consumer<T> consumer) {
         this.matcher = matcher;
         this.parser = parser;
         this.consumer = consumer;
     }
 
-    public static <T> ElementDescription<T> createDescription(ElementMatcher matcher,
+    public static <T> Scope<T> createDescription(ElementMatcher matcher,
             ElementParser<T> parser,
             Consumer<T> consumer) {
-        return new ElementDescription<T>(matcher, parser, consumer);
+        return new Scope<T>(matcher, parser, consumer);
     }
 
     public ElementMatcher getMatcher() {

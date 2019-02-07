@@ -30,7 +30,7 @@ class TaskListParserImpl implements TaskListParser {
 
         while (!reader.finished()) {
             @SuppressWarnings("unchecked")
-            ElementDescription<Object> desc = (ElementDescription<Object>) scope.findParser(reader);
+            Scope<Object> desc = (Scope<Object>) scope.findParser(reader);
 
             Object element = desc.getParser().parse(reader);
 

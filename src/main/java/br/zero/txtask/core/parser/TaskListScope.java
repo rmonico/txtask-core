@@ -1,6 +1,6 @@
 package br.zero.txtask.core.parser;
 
-import static br.zero.txtask.core.parser.ElementDescription.createDescription;
+import static br.zero.txtask.core.parser.Scope.createDescription;
 
 import java.io.IOException;
 
@@ -27,36 +27,36 @@ public class TaskListScope {
         this.taskList = new TaskList();
     }
 
-    private ElementDescription<String> createListTitleDescription() {
+    private Scope<String> createListTitleDescription() {
         return createDescription(new ListTitleMatcher(), new ListTitleParser(), this::setListTitle);
     }
 
-    private ElementDescription<Task> createRootTaskDescription() {
+    private Scope<Task> createRootTaskDescription() {
         return createDescription(new TaskScope(), new TaskParser(), this::addRootTask);
     }
 
-    private ElementDescription<Tag> createTagGroupDescription() {
+    private Scope<Tag> createTagGroupDescription() {
         return createDescription(new TagGroupScope(), new TagGroupParser(), this::addImplicitTag);
     }
 
-    private ElementDescription<String> createEmptyLineDescription() {
+    private Scope<String> createEmptyLineDescription() {
         return createDescription(new EmptyLineScope(), new EmptyLineParser(), this::addEmptyLine);
     }
 
-    private ElementDescription<String> createGarbageLineDescription() {
+    private Scope<String> createGarbageLineDescription() {
         return createDescription(new GarbageScope(), new GarbageParser(), this::addGarbageLine);
     }
 
-    public ElementDescription<?>[] getPossibleMatchers(ParserReader reader) {
+    public Scope<?>[] getPossibleMatchers(ParserReader reader) {
         if (reader.position() == 0) {
-            return new ElementDescription<?>[] { createListTitleDescription() };
+            return new Scope<?>[] { createListTitleDescription() };
         } else {
-            return new ElementDescription<?>[] { createRootTaskDescription(), createTagGroupDescription(), createEmptyLineDescription(), createGarbageLineDescription() };
+            return new Scope<?>[] { createRootTaskDescription(), createTagGroupDescription(), createEmptyLineDescription(), createGarbageLineDescription() };
         }
     }
 
-    public ElementDescription<?> findParser(ParserReader reader) throws ParserException, IOException {
-        for (ElementDescription<?> description : getPossibleMatchers(reader))
+    public Scope<?> findParser(ParserReader reader) throws ParserException, IOException {
+        for (Scope<?> description : getPossibleMatchers(reader))
             if (description.getMatcher().matchs(reader)) {
                 return description;
             }
