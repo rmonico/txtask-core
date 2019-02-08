@@ -55,7 +55,7 @@ public class ParserTests {
     }
 
     @Test
-    public void should_stop_parsing_on_invalid_token() throws FileNotFoundException, ParserException {
+    public void should_stop_parsing_on_invalid_token() {
         TaskListParser parser = TaskListParserFactory.create();
 
         assertTimeoutPreemptively(ofSeconds(3), () -> {
