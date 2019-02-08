@@ -20,4 +20,8 @@ public class ListTitleScope extends AbstractScope<String> {
         return null;
     }
 
+    @Override
+    public boolean done() {
+        return true;
+    }
 }

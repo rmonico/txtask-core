@@ -44,4 +44,8 @@ public abstract class AbstractScope<T> implements Scope<T> {
         return consumer;
     }
 
+    @Override
+    public boolean done() {
+        return false;
+    }
 }

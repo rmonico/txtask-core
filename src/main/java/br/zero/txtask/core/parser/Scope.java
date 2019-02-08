@@ -19,4 +19,5 @@ public interface Scope<T> {
 
     Consumer<T> getConsumer();
 
+    boolean done();
 }

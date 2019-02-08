@@ -20,4 +20,8 @@ public class RootTaskScope extends AbstractScope<Task> {
         return null;
     }
 
+    @Override
+    public boolean done() {
+        return true;
+    }
 }

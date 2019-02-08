@@ -21,4 +21,8 @@ public class TagGroupScope extends AbstractScope<Tag> {
         return null;
     }
 
+    @Override
+    public boolean done() {
+        return true;
+    }
 }
