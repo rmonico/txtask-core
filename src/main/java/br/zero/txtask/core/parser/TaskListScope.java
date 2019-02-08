@@ -1,5 +1,7 @@
 package br.zero.txtask.core.parser;
 
+import static br.zero.txtask.core.parser.ScopeBuilder.newScope;
+
 import java.io.IOException;
 
 import br.zero.txtask.core.model.Tag;
@@ -17,31 +19,33 @@ public class TaskListScope extends AbstractScope<TaskList> {
     private TaskList taskList;
 
     public TaskListScope() {
-        super(null, new InternalTaskListParser(), null);
+        super();
 
-        InternalTaskListParser parser = (InternalTaskListParser) getParser();
+        InternalTaskListParser parser = new InternalTaskListParser();
+        setParser(parser);
+
         this.taskList = new TaskList();
         parser.setTaskList(this.taskList);
     }
 
     private Scope<String> newListTitleScope() {
-        return new ListTitleScope(this::setListTitle);
+        return newScope(ListTitleScope::new).parent(this).consumer(this::setListTitle).make();
     }
 
     private Scope<Task> newRootTaskScope() {
-        return new RootTaskScope(this::addRootTask);
+        return newScope(RootTaskScope::new).parent(this).consumer(this::addRootTask).make();
     }
 
     private Scope<Tag> newTagGroupScope() {
-        return new TagGroupScope(this::addImplicitTag);
+        return newScope(TagGroupScope::new).parent(this).consumer(this::addImplicitTag).make();
     }
 
     private Scope<String> newEmptyLineScope() {
-        return new EmptyLineScope(this::addEmptyLine);
+        return newScope(EmptyLineScope::new).parent(this).consumer(this::addEmptyLine).make();
     }
 
     private Scope<String> newGarbageLineScope() {
-        return new GarbageScope(this::addGarbageLine);
+        return newScope(GarbageScope::new).parent(this).consumer(this::addGarbageLine).make();
     }
 
     public Scope<?>[] getPossibleMatchers(ParserReader reader) {

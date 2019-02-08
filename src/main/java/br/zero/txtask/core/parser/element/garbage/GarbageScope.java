@@ -1,7 +1,6 @@
 package br.zero.txtask.core.parser.element.garbage;
 
 import java.io.IOException;
-import java.util.function.Consumer;
 
 import br.zero.txtask.core.parser.AbstractScope;
 import br.zero.txtask.core.parser.ParserException;
@@ -10,8 +9,9 @@ import br.zero.txtask.core.parser.reader.ParserReader;
 
 public class GarbageScope extends AbstractScope<String> {
 
-    public GarbageScope(Consumer<String> destination) {
-        super(new GarbageMatcher(), new GarbageParser(), destination);
+    public GarbageScope() {
+        setMatcher(new GarbageMatcher());
+        setParser(new GarbageParser());
     }
 
     @Override

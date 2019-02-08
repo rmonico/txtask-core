@@ -1,7 +1,6 @@
 package br.zero.txtask.core.parser.element.taggroup;
 
 import java.io.IOException;
-import java.util.function.Consumer;
 
 import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.parser.AbstractScope;
@@ -11,8 +10,9 @@ import br.zero.txtask.core.parser.reader.ParserReader;
 
 public class TagGroupScope extends AbstractScope<Tag> {
 
-    public TagGroupScope(Consumer<Tag> destination) {
-        super(new TagGroupMatcher(), new TagGroupParser(), destination);
+    public TagGroupScope() {
+        setMatcher(new TagGroupMatcher());
+        setParser(new TagGroupParser());
     }
 
     @Override
