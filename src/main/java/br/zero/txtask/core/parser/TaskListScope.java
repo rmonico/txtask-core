@@ -17,6 +17,8 @@ import br.zero.txtask.core.parser.reader.ParserReader;
 public class TaskListScope extends AbstractScope<TaskList> {
 
     private TaskList taskList;
+    private Scope<?>[] remainingLineScopes;
+    private Scope<?>[] firstLineScopes;
 
     public TaskListScope() {
         super();
@@ -26,6 +28,9 @@ public class TaskListScope extends AbstractScope<TaskList> {
 
         this.taskList = new TaskList();
         parser.setTaskList(this.taskList);
+
+        firstLineScopes = new Scope<?>[] { newListTitleScope() };
+        remainingLineScopes = new Scope<?>[] { newRootTaskScope(), newTagGroupScope(), newEmptyLineScope(), newGarbageLineScope() };
     }
 
     private Scope<String> newListTitleScope() {
@@ -49,11 +54,10 @@ public class TaskListScope extends AbstractScope<TaskList> {
     }
 
     public Scope<?>[] getPossibleMatchers(ParserReader reader) {
-        if (reader.position() == 0) {
-            return new Scope<?>[] { newListTitleScope() };
-        } else {
-            return new Scope<?>[] { newRootTaskScope(), newTagGroupScope(), newEmptyLineScope(), newGarbageLineScope() };
-        }
+        if (reader.position() == 0)
+            return firstLineScopes;
+        else
+            return remainingLineScopes;
     }
 
     public Scope<?> findScope(ParserReader reader) throws ParserException, IOException {
