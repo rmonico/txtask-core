@@ -1,5 +1,5 @@
-# Created by https://www.gitignore.io/api/java,gradle,eclipse,intellij
-# Edit at https://www.gitignore.io/?templates=java,gradle,eclipse,intellij
+# Created by https://www.gitignore.io/api/java,gradle,eclipse,intellij+iml
+# Edit at https://www.gitignore.io/?templates=java,gradle,eclipse,intellij+iml
 
 ### Eclipse ###
 
@@ -71,7 +71,7 @@ local.properties
 
 .sts4-cache/
 
-### Intellij ###
+### Intellij+iml ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
@@ -139,16 +139,13 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-### Intellij Patch ###
-# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+### Intellij+iml Patch ###
+# Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
 
-# *.iml
-# modules.xml
-# .idea/misc.xml
-# *.ipr
-
-# Sonarlint plugin
-.idea/sonarlint
+*.iml
+modules.xml
+.idea/misc.xml
+*.ipr
 
 ### Java ###
 # Compiled class file
@@ -177,7 +174,7 @@ hs_err_pid*
 
 ### Gradle ###
 .gradle
-/build/
+build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -194,4 +191,5 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 
-# End of https://www.gitignore.io/api/java,gradle,eclipse,intellij
+# End of https://www.gitignore.io/api/java,gradle,eclipse,intellij+iml
+
