@@ -9,14 +9,14 @@ import br.zero.txtask.core.parser.reader.ParserReader;
 
 public interface Scope<T> {
 
-    public Scope<?> findScope(ParserReader reader) throws ParserException, IOException;
+    Scope<?> findScope(ParserReader reader) throws ParserException, IOException;
 
-    public Scope<?> getParentScope();
+    Scope<?> getParentScope();
 
-    public ElementMatcher getMatcher();
+    ElementMatcher getMatcher();
 
-    public ElementParser<T> getParser();
+    ElementParser<T> getParser();
 
-    public Consumer<T> getConsumer();
+    Consumer<T> getConsumer();
 
 }
