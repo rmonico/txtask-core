@@ -59,9 +59,7 @@ public class ParserTests {
         TaskListParser parser = TaskListParserFactory.create();
 
         assertTimeoutPreemptively(ofSeconds(3), () -> {
-            assertThrows(ParserException.class, () -> {
-                parser.parse(new FileReader("src/test/resources/should_stop_parsing_on_invalid_token.txk"));
-            }, "Invalid token: '__invalid__token__'");
+            assertThrows(ParserException.class, () -> parser.parse(new FileReader("src/test/resources/should_stop_parsing_on_invalid_token.txk")), "Invalid token: '__invalid__token__'");
         });
     }
 
