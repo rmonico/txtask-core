@@ -32,6 +32,9 @@ class TaskListParserImpl implements TaskListParser {
         Scope<?> scope = mainScope;
 
         while (!reader.finished()) {
+            while (scope.done())
+                scope = scope.getParentScope();
+
             scope = scope.findScope(reader);
 
             Object element = scope.getParser().parse(reader);
