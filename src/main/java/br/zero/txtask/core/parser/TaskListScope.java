@@ -22,7 +22,6 @@ public class TaskListScope extends AbstractScope<TaskList> {
 
     private TaskList taskList;
     private Scope<?>[] remainingLineScopes;
-    private Scope<?>[] firstLineScopes;
     private List<Tag> implicitTags;
 
     public TaskListScope() {
@@ -34,8 +33,7 @@ public class TaskListScope extends AbstractScope<TaskList> {
         this.taskList = new TaskList();
         parser.setTaskList(this.taskList);
 
-        firstLineScopes = new Scope<?>[] { newListTitleScope() };
-        remainingLineScopes = new Scope<?>[] { newRootTaskScope(), newTagInsertionGroupScope(), newTagRemovalGroupScope(), newEmptyLineScope(), newGarbageLineScope() };
+        remainingLineScopes = new Scope<?>[]{newRootTaskScope(), newTagInsertionGroupScope(), newTagRemovalGroupScope(), newEmptyLineScope(), newGarbageLineScope()};
 
         this.implicitTags = new ArrayList<>();
     }
@@ -68,25 +66,29 @@ public class TaskListScope extends AbstractScope<TaskList> {
         return newScope(GarbageScope::new).parent(this).consumer(this::addGarbageLine).make();
     }
 
-    public Scope<?>[] getPossibleScopes(ParserReader reader) {
-        if (reader.position() == 0)
-            return firstLineScopes;
-        else
-            return remainingLineScopes;
-    }
-
     public Scope<?> findScope(ParserReader reader) throws ParserException, IOException {
-        for (Scope<?> scope : getPossibleScopes(reader))
+        if (reader.position() == 0)
+            return findScopeForFirstLine(reader);
+
+        for (Scope<?> scope : this.remainingLineScopes)
             if (scope.getMatcher().matchs(reader)) {
                 return scope.findScope(reader);
             }
 
-        if (reader.position() == 0)
-            throw new ParserException("List title must start with ':: '");
-
         assert false : "No scope identified";
 
         return null;
+    }
+
+    private Scope<?> findScopeForFirstLine(ParserReader reader) throws IOException, ParserException {
+        Scope<?> scope = newListTitleScope();
+
+        scope = scope.findScope(reader);
+
+        if (scope == null)
+            throw new ParserException("List title must start with ':: '");
+
+        return scope;
     }
 
     public void setListTitle(String title) {
