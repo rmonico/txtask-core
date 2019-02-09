@@ -17,7 +17,7 @@ public class RootTaskScope extends AbstractScope<Task> {
 
     @Override
     public Scope<?> findScope(ParserReader reader) throws ParserException, IOException {
-        return null;
+        return getParentScope();
     }
 
     @Override
