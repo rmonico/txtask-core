@@ -16,8 +16,7 @@ public class GarbageScope extends AbstractScope<String> {
 
     @Override
     public Scope<?> findScope(ParserReader reader) throws ParserException, IOException {
-        // TODO Auto-generated method stub
-        return null;
+        return this;
     }
 
 }

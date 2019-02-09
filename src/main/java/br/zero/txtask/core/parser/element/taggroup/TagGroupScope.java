@@ -20,7 +20,7 @@ public class TagGroupScope extends AbstractScope<List<Tag>> {
 
     @Override
     public Scope<?> findScope(ParserReader reader) {
-        return this.getParentScope();
+        return this;
     }
 
     @Override

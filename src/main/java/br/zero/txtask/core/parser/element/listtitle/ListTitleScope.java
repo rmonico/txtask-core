@@ -13,8 +13,7 @@ public class ListTitleScope extends AbstractScope<String> {
 
     @Override
     public Scope<?> findScope(ParserReader reader) {
-        // TODO Auto-generated method stub
-        return null;
+        return this;
     }
 
     @Override

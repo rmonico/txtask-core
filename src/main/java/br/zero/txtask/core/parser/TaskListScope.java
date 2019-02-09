@@ -78,7 +78,7 @@ public class TaskListScope extends AbstractScope<TaskList> {
     public Scope<?> findScope(ParserReader reader) throws ParserException, IOException {
         for (Scope<?> scope : getPossibleScopes(reader))
             if (scope.getMatcher().matchs(reader)) {
-                return scope;
+                return scope.findScope(reader);
             }
 
         if (reader.position() == 0)
