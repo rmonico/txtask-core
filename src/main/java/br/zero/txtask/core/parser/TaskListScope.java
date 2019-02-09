@@ -38,10 +38,6 @@ public class TaskListScope extends AbstractScope<TaskList> {
         this.implicitTags = new ArrayList<>();
     }
 
-    private Scope<String> newListTitleScope() {
-        return newScope(ListTitleScope::new).parent(this).consumer(this::setListTitle).make();
-    }
-
     private Scope<Task> newRootTaskScope() {
         return newScope(RootTaskScope::new).parent(this).consumer(this::addRootTask).make();
     }
@@ -81,7 +77,7 @@ public class TaskListScope extends AbstractScope<TaskList> {
     }
 
     private Scope<?> findScopeForFirstLine(ParserReader reader) throws IOException, ParserException {
-        Scope<?> scope = newListTitleScope();
+        Scope<?> scope = newScope(ListTitleScope::new).parent(this).consumer(this::setListTitle).make();
 
         scope = scope.findScope(reader);
 
