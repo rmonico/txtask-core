@@ -1,11 +1,12 @@
 package br.zero.txtask.core.parser.element.task;
 
 import static br.zero.java.StringFormatter.s;
-import static br.zero.txtask.core.parser.element.abstracttag.Constants.TAG_PREFIX;
+import static br.zero.txtask.core.parser.element.taggroup.Constants.TAG_PREFIX;
 import static br.zero.txtask.core.parser.element.task.Constants.TASK_STATUSES;
 import static br.zero.txtask.core.parser.element.task.Constants.TASK_STATUSES_ARRAY;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 
@@ -14,12 +15,13 @@ import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.model.Task;
 import br.zero.txtask.core.parser.ParserException;
 import br.zero.txtask.core.parser.element.ElementParser;
+import br.zero.txtask.core.parser.element.taggroup.TagGroupParser;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
 public class TaskParser implements ElementParser<Task> {
 
     @Override
-    public Task parse(ParserReader reader) throws ParserException, IOException {
+    public Task parse(ParserReader reader) throws IOException {
         Status status = parseStatus(reader);
 
         String taskTitle = parseTitle(reader);
@@ -30,7 +32,11 @@ public class TaskParser implements ElementParser<Task> {
 
         task.setTitle(taskTitle);
 
-        parseTags(reader, tag -> task.getTags().add(tag), TAG_PREFIX);
+        TagGroupParser tagParser = new TagGroupParser(TAG_PREFIX);
+
+        List<Tag> tagList = tagParser.parse(reader);
+
+        task.getTags().addAll(tagList);
 
         return task;
     }
@@ -59,24 +65,6 @@ public class TaskParser implements ElementParser<Task> {
         String taskTitle = reader.consume().until(TAG_PREFIX).or().eol().go();
 
         return taskTitle;
-    }
-
-    private void parseTags(ParserReader reader,
-            Consumer<Tag> onTagFound,
-            String... prefixes) throws IOException {
-
-        int prefixIndex;
-        while ((prefixIndex = reader.followed().byAnyOf(prefixes).which()) > -1) {
-            reader.consume().next(prefixes[prefixIndex].length()).go();
-
-            Tag tag = new Tag();
-
-            String tagName = reader.consume().until(prefixes).or().eol().go();
-
-            tag.setName(tagName);
-
-            onTagFound.accept(tag);
-        }
     }
 
 }
