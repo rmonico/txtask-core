@@ -1,24 +1,26 @@
 package br.zero.txtask.core.parser.element.taggroup;
 
-import java.io.IOException;
-
 import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.parser.AbstractScope;
-import br.zero.txtask.core.parser.ParserException;
 import br.zero.txtask.core.parser.Scope;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
-public class TagGroupScope extends AbstractScope<Tag> {
+import java.util.List;
 
-    public TagGroupScope() {
-        setMatcher(new TagGroupMatcher());
-        setParser(new TagGroupParser());
+import static br.zero.txtask.core.parser.element.taggroup.Constants.IMPLICIT_TAG_INSERTION_INITIAL_PREFIX;
+
+public class TagGroupScope extends AbstractScope<List<Tag>> {
+
+    public TagGroupScope(String... prefixes) {
+        assert prefixes.length > 0 : "At least one prefix must be passed";
+
+        setMatcher(new TagGroupMatcher(prefixes[0]));
+        setParser(new TagGroupParser(prefixes));
     }
 
     @Override
-    public Scope<?> findScope(ParserReader reader) throws ParserException, IOException {
-        // TODO Auto-generated method stub
-        return null;
+    public Scope<?> findScope(ParserReader reader) {
+        return this.getParentScope();
     }
 
     @Override
