@@ -1,9 +1,6 @@
 package br.zero.txtask.core.parser.element.listtitle;
 
-import java.io.IOException;
-
 import br.zero.txtask.core.parser.AbstractScope;
-import br.zero.txtask.core.parser.ParserException;
 import br.zero.txtask.core.parser.Scope;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
@@ -15,7 +12,7 @@ public class ListTitleScope extends AbstractScope<String> {
     }
 
     @Override
-    public Scope<?> findScope(ParserReader reader) throws ParserException, IOException {
+    public Scope<?> findScope(ParserReader reader) {
         // TODO Auto-generated method stub
         return null;
     }
