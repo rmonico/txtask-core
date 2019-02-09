@@ -7,6 +7,6 @@ import br.zero.txtask.core.parser.reader.ParserReader;
 
 public interface ElementMatcher {
 
-    public boolean matchs(ParserReader reader) throws ParserException, IOException;
+    boolean matchs(ParserReader reader) throws ParserException, IOException;
 
 }
