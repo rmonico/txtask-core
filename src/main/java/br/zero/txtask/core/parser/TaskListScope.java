@@ -1,9 +1,5 @@
 package br.zero.txtask.core.parser;
 
-import static br.zero.txtask.core.parser.ScopeBuilder.newScope;
-
-import java.io.IOException;
-
 import br.zero.txtask.core.model.Tag;
 import br.zero.txtask.core.model.Task;
 import br.zero.txtask.core.model.TaskList;
@@ -14,11 +10,20 @@ import br.zero.txtask.core.parser.element.taggroup.TagGroupScope;
 import br.zero.txtask.core.parser.element.task.RootTaskScope;
 import br.zero.txtask.core.parser.reader.ParserReader;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+import static br.zero.txtask.core.parser.ScopeBuilder.newScope;
+import static br.zero.txtask.core.parser.element.taggroup.Constants.*;
+
 public class TaskListScope extends AbstractScope<TaskList> {
 
     private TaskList taskList;
     private Scope<?>[] remainingLineScopes;
     private Scope<?>[] firstLineScopes;
+    private List<Tag> implicitTags;
 
     public TaskListScope() {
         super();
@@ -30,7 +35,9 @@ public class TaskListScope extends AbstractScope<TaskList> {
         parser.setTaskList(this.taskList);
 
         firstLineScopes = new Scope<?>[] { newListTitleScope() };
-        remainingLineScopes = new Scope<?>[] { newRootTaskScope(), newTagGroupScope(), newEmptyLineScope(), newGarbageLineScope() };
+        remainingLineScopes = new Scope<?>[] { newRootTaskScope(), newTagInsertionGroupScope(), newTagRemovalGroupScope(), newEmptyLineScope(), newGarbageLineScope() };
+
+        this.implicitTags = new ArrayList<>();
     }
 
     private Scope<String> newListTitleScope() {
@@ -41,8 +48,16 @@ public class TaskListScope extends AbstractScope<TaskList> {
         return newScope(RootTaskScope::new).parent(this).consumer(this::addRootTask).make();
     }
 
-    private Scope<Tag> newTagGroupScope() {
-        return newScope(TagGroupScope::new).parent(this).consumer(this::addImplicitTag).make();
+    private Scope<List<Tag>> newTagInsertionGroupScope() {
+        return newTagGroupScope(this::addImplicitTags, IMPLICIT_TAG_INSERTION_INITIAL_PREFIX, IMPLICIT_TAG_INSERTION_PREFIX);
+    }
+
+    private Scope<List<Tag>> newTagRemovalGroupScope() {
+        return newTagGroupScope(this::removeImplicitTags, IMPLICIT_TAG_REMOVAL_INITIAL_PREFIX, IMPLICIT_TAG_REMOVAL_PREFIX);
+    }
+
+    private Scope<List<Tag>> newTagGroupScope(Consumer<List<Tag>> consumer, String... prefixes) {
+        return newScope(() -> new TagGroupScope(prefixes)).parent(this).consumer(consumer).make();
     }
 
     private Scope<String> newEmptyLineScope() {
@@ -80,9 +95,16 @@ public class TaskListScope extends AbstractScope<TaskList> {
 
     public void addRootTask(Task task) {
         this.taskList.getTasks().add(task);
+
+        task.getTags().addAll(implicitTags);
     }
 
-    public void addImplicitTag(Tag tag) {
+    public void addImplicitTags(List<Tag> tagList) {
+        this.implicitTags.addAll(tagList);
+    }
+
+    public void removeImplicitTags(List<Tag> tagList) {
+        this.implicitTags.removeAll(tagList);
     }
 
     public void addEmptyLine(String emptyLine) {
