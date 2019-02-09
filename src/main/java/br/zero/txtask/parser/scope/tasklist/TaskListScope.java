@@ -10,7 +10,7 @@ import br.zero.txtask.parser.scope.linebreak.LineBreakScope;
 import br.zero.txtask.parser.scope.garbage.GarbageScope;
 import br.zero.txtask.parser.scope.tasklist.title.ListTitleScope;
 import br.zero.txtask.parser.scope.tag.TagGroupScope;
-import br.zero.txtask.parser.scope.task.RootTaskScope;
+import br.zero.txtask.parser.scope.task.TaskScope;
 import br.zero.txtask.parser.reader.ParserReader;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class TaskListScope extends AbstractScope<TaskList> {
     }
 
     private Scope<Task> newRootTaskScope() {
-        return newScope(RootTaskScope::new).parent(this).consumer(this::addRootTask).make();
+        return newScope(TaskScope::new).parent(this).consumer(this::addRootTask).make();
     }
 
     private Scope<List<Tag>> newTagInsertionGroupScope() {

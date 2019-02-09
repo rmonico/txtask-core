@@ -19,12 +19,12 @@ import java.util.List;
 import static br.zero.txtask.parser.scope.ScopeBuilder.newScope;
 import static br.zero.txtask.parser.scope.tag.Constants.TAG_PREFIX;
 
-public class RootTaskScope extends AbstractScope<Task> implements ElementParser<Task> {
+public class TaskScope extends AbstractScope<Task> implements ElementParser<Task> {
 
     private Task task;
     private String step;
 
-    public RootTaskScope() {
+    public TaskScope() {
         this.setParser(this);
         this.step = "idle";
     }
