@@ -1,13 +1,22 @@
 package br.zero.txtask.core.parser.element.taggroup;
 
-import static br.zero.txtask.core.parser.element.abstracttag.Constants.IMPLICIT_TAG_INITIAL_PREFIX;
+import br.zero.txtask.core.parser.element.ElementMatcher;
+import br.zero.txtask.core.parser.reader.ParserReader;
 
-import br.zero.txtask.core.parser.element.abstracttag.AbstractTagMatcher;
+import java.io.IOException;
 
-public class TagGroupMatcher extends AbstractTagMatcher {
+public class TagGroupMatcher implements ElementMatcher {
 
-    public TagGroupMatcher() {
-        super(IMPLICIT_TAG_INITIAL_PREFIX);
+    private String initialTagPrefix;
+
+    public TagGroupMatcher(String initialTagPrefix) {
+        this.initialTagPrefix = initialTagPrefix;
     }
+
+    @Override
+    public boolean matchs(ParserReader reader) throws IOException {
+        return reader.followed().by(this.initialTagPrefix).go();
+    }
+
 
 }
