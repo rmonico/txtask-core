@@ -137,7 +137,6 @@ public class ParserTests {
     }
 
     @Test
-    @Disabled
     public void should_parse_subtasks() throws FileNotFoundException, ParserException {
         TaskListParser parser = TaskListParserFactory.create();
 
