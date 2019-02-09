@@ -9,7 +9,7 @@ import br.zero.txtask.core.parser.reader.ParserReader;
 public class EmptyLineParser implements ElementParser<String> {
 
     @Override
-    public String parse(ParserReader reader) throws ParserException, IOException {
+    public String parse(ParserReader reader) throws IOException {
         String line = reader.consume().next(1).go();
 
         assert "\n".equals(line) : "Trying to parse with BlankLineParser on non-blank line";
