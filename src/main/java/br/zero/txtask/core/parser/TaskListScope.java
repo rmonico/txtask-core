@@ -68,7 +68,7 @@ public class TaskListScope extends AbstractScope<TaskList> {
         return newScope(GarbageScope::new).parent(this).consumer(this::addGarbageLine).make();
     }
 
-    public Scope<?>[] getPossibleMatchers(ParserReader reader) {
+    public Scope<?>[] getPossibleScopes(ParserReader reader) {
         if (reader.position() == 0)
             return firstLineScopes;
         else
@@ -76,7 +76,7 @@ public class TaskListScope extends AbstractScope<TaskList> {
     }
 
     public Scope<?> findScope(ParserReader reader) throws ParserException, IOException {
-        for (Scope<?> scope : getPossibleMatchers(reader))
+        for (Scope<?> scope : getPossibleScopes(reader))
             if (scope.getMatcher().matchs(reader)) {
                 return scope;
             }
