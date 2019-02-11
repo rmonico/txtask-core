@@ -27,7 +27,7 @@ public class TaskListParserImpl implements TaskListParser {
         }
     }
 
-    private TaskList internalParse(ParserReader reader) {
+    private TaskList internalParse(ParserReader reader) throws IOException, ParserException {
         return br.zero.txtask.parser.internal.TaskListParser.parse(reader);
     }
 
