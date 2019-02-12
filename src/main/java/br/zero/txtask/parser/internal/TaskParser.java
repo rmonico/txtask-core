@@ -22,16 +22,22 @@ class TaskParser {
     }
 
     void parse(ParserReader reader, Consumer<Task> consumer) throws IOException, ParserException {
-        while (taskStatusParser().matches(reader)) {
+        this.parse(reader, consumer, 0);
+    }
+
+    void parse(ParserReader reader, Consumer<Task> consumer, int identLevel) throws IOException, ParserException {
+        while (taskStatusParser().matches(reader, identLevel)) {
             Task task = new Task();
 
-            task.setStatus(taskStatusParser().parse(reader));
+            task.setStatus(taskStatusParser().parse(reader, identLevel));
 
             task.setTitle(taskTitleParser().parse(reader));
 
             tagsParser().parse(reader, task.getTags()::add, TAG_MARK);
 
             constantParser().parseUntilNextNonEmptyLine(reader);
+
+            taskParser().parse(reader, task.getTasks()::add, identLevel + 1);
 
             consumer.accept(task);
         }

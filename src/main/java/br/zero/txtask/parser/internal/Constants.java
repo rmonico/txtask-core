@@ -5,7 +5,6 @@ import br.zero.txtask.model.Status;
 
 import java.util.Map;
 
-import static br.zero.java.StringFormatter.s;
 import static br.zero.txtask.model.Status.DONE;
 import static br.zero.txtask.model.Status.OPEN;
 
@@ -20,4 +19,5 @@ class Constants {
     static final String IMPLICIT_TAG_INSERTION_MARK = "##";
     static final String IMPLICIT_TAG_REMOVAL_MARK = "==";
 
+    static final String SUB_TASK_IDENT = "  ";
 }
