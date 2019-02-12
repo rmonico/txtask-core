@@ -1,29 +1,24 @@
 package br.zero.txtask.parser;
 
-import static br.zero.java.StringFormatter.s;
-import static br.zero.txtask.parser.internal.Constants.TAG_MARK;
-import static br.zero.txtask.parser.matcherfactory.TaskListMatcherFactory.task;
-import static br.zero.txtask.parser.matcherfactory.TaskListMatcherFactory.taskCount;
-import static br.zero.txtask.parser.matcherfactory.TaskListMatcherFactory.title;
-import static br.zero.txtask.model.Status.DONE;
-import static br.zero.txtask.model.Status.OPEN;
-import static java.lang.System.lineSeparator;
-import static java.time.Duration.ofSeconds;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
+import br.zero.txtask.model.TaskList;
+import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-
-import br.zero.txtask.model.TaskList;
+import static br.zero.java.StringFormatter.s;
+import static br.zero.txtask.model.Status.DONE;
+import static br.zero.txtask.model.Status.OPEN;
+import static br.zero.txtask.parser.internal.Constants.TAG_MARK;
+import static br.zero.txtask.parser.matcherfactory.TaskListMatcherFactory.*;
+import static java.time.Duration.ofSeconds;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 
 public class ParserTests {
 
@@ -165,7 +160,7 @@ public class ParserTests {
     }
 
     @Test
-    public void should_not_allow_task_title_with_tag_mark() throws FileNotFoundException, ParserException {
+    public void should_not_allow_task_title_with_tag_mark() {
         TaskListParser parser = TaskListParserFactory.create();
 
         StringBuilder sb = new StringBuilder();
