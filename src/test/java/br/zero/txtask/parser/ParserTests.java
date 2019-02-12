@@ -174,4 +174,19 @@ public class ParserTests {
     }
 
     @Test
+    public void should_not_allow_tag_name_with_invalid_values() throws FileNotFoundException, ParserException {
+        TaskListParser parser = TaskListParserFactory.create();
+
+        ParserException exception = assertThrows(ParserException.class, () -> parser.parse(new FileReader("src/test/resources/should_not_allow_tag_name_with_invalid_values_1.txk")));
+
+        assertThat(exception.getMessage(), is("Tags cant have uppercase letters"));
+
+        exception = assertThrows(ParserException.class, () -> parser.parse(new FileReader("src/test/resources/should_not_allow_tag_name_with_invalid_values_2.txk")));
+
+        assertThat(exception.getMessage(), is("Tags can have only a-z, 0-9 or _ characters"));
+
+        exception = assertThrows(ParserException.class, () -> parser.parse(new FileReader("src/test/resources/should_not_allow_tag_name_with_invalid_values_3.txk")));
+
+        assertThat(exception.getMessage(), is("Tags must start with a-z, or _ characters"));
+    }
 }
