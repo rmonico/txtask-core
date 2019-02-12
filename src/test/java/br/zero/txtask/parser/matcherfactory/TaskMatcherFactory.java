@@ -41,4 +41,7 @@ public class TaskMatcherFactory {
         return feature((TaskContainer container) -> itemExtractor.apply(container).getStatus()).description("task's status").name("status");
     }
 
+    public FunctionalFeatureMatcherFactory<? super TaskContainer, String> comment() {
+        return feature((TaskContainer container) -> itemExtractor.apply(container).getComment()).description("task's comment").name("comment");
+    }
 }

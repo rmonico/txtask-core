@@ -189,4 +189,14 @@ public class ParserTests {
 
         assertThat(exception.getMessage(), is("Tags must start with a-z, or _ characters"));
     }
+
+    @Test
+    public void should_parse_single_line_comments_on_root_tasks() throws FileNotFoundException, ParserException {
+        TaskListParser parser = TaskListParserFactory.create();
+
+        TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_single_line_comments_on_root_tasks.txk"));
+
+        assertThat(list, task(0).title().should(is("First task with comment")));
+        assertThat(list, task(0).comment().should(is("Comment contents")));
+    }
 }
