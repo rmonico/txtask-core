@@ -2,6 +2,8 @@ package br.zero.txtask.parser.reader;
 
 import java.io.IOException;
 
+import static java.lang.System.lineSeparator;
+
 public class ParserReaderMatcher {
 
     private ParserReader reader;
@@ -18,8 +20,7 @@ public class ParserReaderMatcher {
     }
 
     public ParserReaderMatcher byEol() {
-        // TODO Windows will break this line
-        return by("\n");
+        return by(lineSeparator());
     }
 
     public ParserReaderMatcher byAnyOf(String... values) {
