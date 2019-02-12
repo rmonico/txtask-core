@@ -15,14 +15,14 @@ class TagsParser {
     }
 
     void parse(ParserReader reader, Consumer<Tag> consumer, String prefix) throws IOException {
-        // TODO Remove this variable if not used anymore
-        int prefixIndex;
-        while ((prefixIndex = reader.followed().by(prefix).which()) > -1) {
+        while (reader.followed().by(prefix).which() > -1) {
             reader.consume().next(prefix.length()).go();
 
             Tag tag = new Tag();
 
-            String tagName = reader.consume().until(prefix).or().eol().go();
+            String tagName = reader.consume().until(" ").or().eol().go();
+
+            reader.consume().until(prefix).or().eol().go();
 
             tag.setName(tagName);
 

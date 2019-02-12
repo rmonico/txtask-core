@@ -14,10 +14,10 @@ class Constants {
     static final String LIST_TITLE_PREFIX = ":: ";
 
     static final Map<Status, String> TASK_STATUSES = MapBuilder.create(Status.class, String.class).hashMap().put(OPEN, "- ").put(DONE, "x ").done();
-
     static final String[] TASK_STATUSES_ARRAY = TASK_STATUSES.values().toArray(new String[]{});
 
     static final String TAG_MARK = "#";
-    static final String TAG_PREFIX = s(" %s").format(TAG_MARK);
+    static final String IMPLICIT_TAG_INSERTION_MARK = "##";
+    static final String IMPLICIT_TAG_REMOVAL_MARK = "==";
 
 }

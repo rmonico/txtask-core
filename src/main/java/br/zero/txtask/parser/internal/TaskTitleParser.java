@@ -6,7 +6,7 @@ import br.zero.txtask.parser.reader.ParserReader;
 import java.io.IOException;
 
 import static br.zero.txtask.parser.ParserException.error;
-import static br.zero.txtask.parser.internal.Constants.TAG_PREFIX;
+import static br.zero.txtask.parser.internal.Constants.TAG_MARK;
 
 class TaskTitleParser {
 
@@ -20,11 +20,16 @@ class TaskTitleParser {
         if (!this.matches(reader))
             error("Cant parse task title", reader);
 
-        return reader.consume().until(TAG_PREFIX).or().eol().go();
+        String title = reader.consume().until(" " + TAG_MARK).or().eol().go();
+
+        if (reader.followed().by(" ").go())
+            reader.consume().next(1).go();
+
+        return title;
     }
 
     private boolean matches(ParserReader reader) throws IOException {
-        return !reader.followed().by(TAG_PREFIX).byEol().go();
+        return !reader.followed().by(TAG_MARK).byEol().go();
     }
 
 }
