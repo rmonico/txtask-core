@@ -30,9 +30,12 @@ class TaskListParser {
         constantParser().parseUntilNextNonEmptyLine(reader);
 
         while (!reader.finished()) {
-            Task task = TaskParser.parse(reader);
+            int initialPosition = reader.position();
 
-            taskList.getTasks().add(task);
+            taskParser().parse(reader, taskList.getTasks()::add);
+
+            if (initialPosition == reader.position())
+                error("Invalid token", reader);
         }
 
         return taskList;
