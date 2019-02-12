@@ -50,8 +50,7 @@ class TaskListParser {
             tagsParser().parse(reader, implicitTags::remove, IMPLICIT_TAG_REMOVAL_MARK);
 
             if (initialPosition == reader.position())
-                break;
-//                error("Invalid token", reader);
+                error("Invalid token", reader);
         }
 
         return taskList;

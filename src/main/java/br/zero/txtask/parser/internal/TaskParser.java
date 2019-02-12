@@ -46,7 +46,6 @@ class TaskParser {
 
             taskParser().parse(reader, task.getTasks()::add, identLevel + 1);
 
-            task.setComment("Comment contents");
 
             consumer.accept(task);
         }
