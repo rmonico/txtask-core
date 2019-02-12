@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 
 import static br.zero.java.StringFormatter.s;
 import static br.zero.txtask.parser.ParserException.error;
+import static br.zero.txtask.parser.internal.CommentParser.commentParser;
 import static br.zero.txtask.parser.internal.ConstantParser.constantParser;
 import static br.zero.txtask.parser.internal.Constants.TAG_MARK;
 import static br.zero.txtask.parser.internal.TagsParser.tagsParser;
@@ -44,8 +45,11 @@ class TaskParser {
 
             constantParser().parseUntilNextNonEmptyLine(reader);
 
-            taskParser().parse(reader, task.getTasks()::add, identLevel + 1);
+            commentParser().parse(reader, task::setComment);
 
+            constantParser().parseUntilNextNonEmptyLine(reader);
+
+            taskParser().parse(reader, task.getTasks()::add, identLevel + 1);
 
             consumer.accept(task);
         }

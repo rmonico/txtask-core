@@ -10,6 +10,7 @@ import static br.zero.txtask.model.Status.OPEN;
 
 public class Constants {
 
+    static final String SINGLE_LINE_COMMENT_MARK = "; ";
     static final String LIST_TITLE_PREFIX = ":: ";
 
     static final Map<Status, String> TASK_STATUSES = MapBuilder.create(Status.class, String.class).hashMap().put(OPEN, "- ").put(DONE, "x ").done();
