@@ -45,7 +45,7 @@ class TaskParser {
 
             constantParser().parseUntilNextNonEmptyLine(reader);
 
-            commentParser().parse(reader, task::setComment);
+            commentParser().parse(reader, task::setComment, identLevel);
 
             constantParser().parseUntilNextNonEmptyLine(reader);
 
