@@ -1,10 +1,13 @@
 package br.zero.txtask.parser;
 
+import static br.zero.java.StringFormatter.s;
+import static br.zero.txtask.parser.internal.Constants.TAG_MARK;
 import static br.zero.txtask.parser.matcherfactory.TaskListMatcherFactory.task;
 import static br.zero.txtask.parser.matcherfactory.TaskListMatcherFactory.taskCount;
 import static br.zero.txtask.parser.matcherfactory.TaskListMatcherFactory.title;
 import static br.zero.txtask.model.Status.DONE;
 import static br.zero.txtask.model.Status.OPEN;
+import static java.lang.System.lineSeparator;
 import static java.time.Duration.ofSeconds;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -161,4 +164,17 @@ public class ParserTests {
         assertThat(list.getTasks().get(0).getTasks().get(0).getTasks().size(), is(1));
     }
 
+    @Test
+    public void should_not_allow_task_title_with_tag_mark() throws FileNotFoundException, ParserException {
+        TaskListParser parser = TaskListParserFactory.create();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(s(":: Title%n").format());
+        sb.append(s("- Valid task%n").format());
+        sb.append(s("- Invalid%stask%n").format(TAG_MARK));
+
+        ParserException exception = assertThrows(ParserException.class, () -> parser.parse(new StringReader(sb.toString())));
+
+        assertThat(exception.getMessage(), is(s("Task title cant have TAG_MARK ('%s')").format(TAG_MARK)));
+    }
 }

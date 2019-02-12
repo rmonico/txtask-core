@@ -7,6 +7,8 @@ import br.zero.txtask.parser.reader.ParserReader;
 import java.io.IOException;
 import java.util.function.Consumer;
 
+import static br.zero.java.StringFormatter.s;
+import static br.zero.txtask.parser.ParserException.error;
 import static br.zero.txtask.parser.internal.ConstantParser.constantParser;
 import static br.zero.txtask.parser.internal.Constants.TAG_MARK;
 import static br.zero.txtask.parser.internal.TagsParser.tagsParser;
@@ -31,7 +33,12 @@ class TaskParser {
 
             task.setStatus(taskStatusParser().parse(reader, identLevel));
 
-            task.setTitle(taskTitleParser().parse(reader));
+            String title = taskTitleParser().parse(reader);
+
+            if (title.contains(TAG_MARK))
+                throw new ParserException(s("Task title cant have TAG_MARK ('%s')").format(TAG_MARK));
+
+            task.setTitle(title);
 
             tagsParser().parse(reader, task.getTags()::add, TAG_MARK);
 
