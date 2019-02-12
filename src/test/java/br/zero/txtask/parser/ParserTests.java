@@ -199,4 +199,16 @@ public class ParserTests {
         assertThat(list, task(0).title().should(is("First task with comment")));
         assertThat(list, task(0).comment().should(is("Comment contents")));
     }
+
+    @Test
+    public void should_parse_single_line_comments_on_sub_tasks() throws FileNotFoundException, ParserException {
+        TaskListParser parser = TaskListParserFactory.create();
+
+        TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_single_line_comments_on_sub_tasks.txk"));
+
+        assertThat(list, task(0).title().should(is("Parent task")));
+        assertThat(list, task(0).task(0).title().should(is("Sub task with comment")));
+        assertThat(list, task(0).task(0).comment().should(is("Sub task comment contents")));
+    }
+
 }
