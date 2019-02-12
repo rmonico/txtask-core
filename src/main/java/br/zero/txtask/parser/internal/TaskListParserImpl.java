@@ -13,22 +13,15 @@ public class TaskListParserImpl implements TaskListParser {
     @Override
     public TaskList parse(Reader source) throws ParserException {
         ParserReader parserReader = new ParserReader(source);
-        return this.doParse(parserReader);
-    }
 
-    private TaskList doParse(ParserReader reader) throws ParserException {
         try {
-            if (reader.finished())
+            if (parserReader.finished())
                 throw new ParserException("List is empty");
 
-            return internalParse(reader);
+            return br.zero.txtask.parser.internal.TaskListParser.parse(parserReader);
         } catch (IOException e) {
             throw new ParserException(e);
         }
-    }
-
-    private TaskList internalParse(ParserReader reader) throws IOException, ParserException {
-        return br.zero.txtask.parser.internal.TaskListParser.parse(reader);
     }
 
 }

@@ -48,7 +48,7 @@ public class ParserTests {
 
         ParserException exception = assertThrows(ParserException.class, () -> parser.parse(new StringReader("- Task on first line")));
 
-        assertThat(exception.getMessage(), is("List title must start with ':: '"));
+        assertThat(exception.getMessage(), is("List title must start with ':: '; found: '- Task on first line'"));
     }
 
     @Test

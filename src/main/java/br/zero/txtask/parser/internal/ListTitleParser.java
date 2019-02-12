@@ -6,18 +6,19 @@ import br.zero.txtask.parser.reader.ParserReader;
 import java.io.IOException;
 
 import static br.zero.java.StringFormatter.s;
+import static br.zero.txtask.parser.ParserException.error;
 
 public class ListTitleParser {
 
-    public static String parse(ParserReader reader) throws IOException, ParserException {
-        ListTitleParser parser = new ListTitleParser();
+    private static final ListTitleParser instance = new ListTitleParser();
 
-        return parser.internalParse(reader);
+    public static String parse(ParserReader reader) throws IOException, ParserException {
+        return instance.internalParse(reader);
     }
 
     private String internalParse(ParserReader reader) throws IOException, ParserException {
         if (!this.matches(reader))
-            throw new ParserException(s("List title must start with '%s'").format(Constants.LIST_TITLE_PREFIX));
+            error(s("List title must start with '%s'").format(Constants.LIST_TITLE_PREFIX), reader);
 
         reader.consume().next(Constants.LIST_TITLE_PREFIX.length()).go();
 
