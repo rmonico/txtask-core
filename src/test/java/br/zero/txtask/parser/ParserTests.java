@@ -174,7 +174,7 @@ public class ParserTests {
     }
 
     @Test
-    public void should_not_allow_tag_name_with_invalid_values() throws FileNotFoundException, ParserException {
+    public void should_not_allow_tag_name_with_invalid_values() {
         TaskListParser parser = TaskListParserFactory.create();
 
         ParserException exception = assertThrows(ParserException.class, () -> parser.parse(new FileReader("src/test/resources/should_not_allow_tag_name_with_invalid_values_1.txk")));
