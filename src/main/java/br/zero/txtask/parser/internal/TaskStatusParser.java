@@ -10,8 +10,8 @@ import java.util.Map;
 import static br.zero.java.StringFormatter.s;
 import static br.zero.txtask.parser.ParserException.error;
 import static br.zero.txtask.parser.internal.Constants.*;
+import static br.zero.txtask.parser.internal.ParserUtilities.identString;
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.IntStream.range;
 import static java.util.stream.Stream.of;
 
 class TaskStatusParser {
@@ -42,9 +42,9 @@ class TaskStatusParser {
     }
 
     private String[] getPrefixes(int identLevel) {
-        final String prefixString = range(0, identLevel).mapToObj(i -> SUB_TASK_IDENT).collect(joining());
+        final String identString = identString(identLevel);
 
-        return of(TASK_STATUSES_ARRAY).map(s -> prefixString + s).toArray(String[]::new);
+        return of(TASK_STATUSES_ARRAY).map(s -> identString + s).toArray(String[]::new);
     }
 
     boolean matches(ParserReader reader, int identLevel) throws IOException {
