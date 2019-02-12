@@ -8,6 +8,7 @@ public class Task implements TaskContainer {
     private List<Tag> tags;
     private List<Task> tasks;
     private Status status;
+    private String comment;
 
     public Task() {
         tags = new ArrayList<>();
@@ -39,4 +40,11 @@ public class Task implements TaskContainer {
         return status;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 }
