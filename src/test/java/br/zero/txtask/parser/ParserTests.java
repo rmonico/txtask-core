@@ -172,4 +172,6 @@ public class ParserTests {
 
         assertThat(exception.getMessage(), is(s("Task title cant have TAG_MARK ('%s')").format(TAG_MARK)));
     }
+
+    @Test
 }
