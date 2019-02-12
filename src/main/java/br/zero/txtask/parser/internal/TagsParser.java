@@ -4,21 +4,17 @@ import br.zero.txtask.model.Tag;
 import br.zero.txtask.parser.reader.ParserReader;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 class TagsParser {
 
     private static TagsParser instance = new TagsParser();
 
-    static void parse(ParserReader reader, Consumer<Tag> consumer, String prefix) throws IOException {
-        instance.internalParse(reader, consumer, prefix);
+    static TagsParser tagsParser() {
+        return instance;
     }
 
-    void internalParse(ParserReader reader, Consumer<Tag> consumer, String prefix) throws IOException {
-        List<Tag> tagList = new ArrayList<>();
-
+    void parse(ParserReader reader, Consumer<Tag> consumer, String prefix) throws IOException {
         // TODO Remove this variable if not used anymore
         int prefixIndex;
         while ((prefixIndex = reader.followed().by(prefix).which()) > -1) {

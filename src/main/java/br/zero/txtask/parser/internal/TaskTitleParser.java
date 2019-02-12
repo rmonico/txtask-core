@@ -10,13 +10,13 @@ import static br.zero.txtask.parser.internal.Constants.TAG_PREFIX;
 
 class TaskTitleParser {
 
-    private static final TaskTitleParser parser = new TaskTitleParser();
+    private static final TaskTitleParser instance = new TaskTitleParser();
 
-    static String parse(ParserReader reader) throws IOException, ParserException {
-        return parser.internalParse(reader);
+    static TaskTitleParser taskTitleParser() {
+        return instance;
     }
 
-    private String internalParse(ParserReader reader) throws ParserException, IOException {
+    String parse(ParserReader reader) throws ParserException, IOException {
         if (!this.matches(reader))
             error("Cant parse task title", reader);
 
@@ -24,7 +24,7 @@ class TaskTitleParser {
     }
 
     private boolean matches(ParserReader reader) throws IOException {
-        return !reader.followed().byAnyOf(TAG_PREFIX, "\n").go();
+        return !reader.followed().by(TAG_PREFIX).byEol().go();
     }
 
 }

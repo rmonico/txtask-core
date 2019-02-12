@@ -1,31 +1,33 @@
 package br.zero.txtask.parser.internal;
 
-import br.zero.txtask.model.Task;
 import br.zero.txtask.model.TaskList;
 import br.zero.txtask.parser.ParserException;
 import br.zero.txtask.parser.reader.ParserReader;
 
 import java.io.IOException;
 
-import static br.zero.txtask.parser.internal.ConstantParser.parseUntilNextNonEmptyLine;
+import static br.zero.txtask.parser.ParserException.error;
+import static br.zero.txtask.parser.internal.ConstantParser.constantParser;
+import static br.zero.txtask.parser.internal.ListTitleParser.listTitleParser;
+import static br.zero.txtask.parser.internal.TaskParser.taskParser;
 
 class TaskListParser {
 
     private static final TaskListParser instance = new TaskListParser();
 
-    static TaskList parse(ParserReader reader) throws IOException, ParserException {
-        return instance.internalParse(reader);
+    static TaskListParser listParser() {
+        return instance;
     }
 
-    private TaskList internalParse(ParserReader reader) throws IOException, ParserException {
+    TaskList parse(ParserReader reader) throws IOException, ParserException {
         TaskList taskList = new TaskList();
 
-        taskList.setTitle(ListTitleParser.parse(reader));
+        taskList.setTitle(listTitleParser().parse(reader));
 
         if (reader.finished())
             return taskList;
 
-        parseUntilNextNonEmptyLine(reader);
+        constantParser().parseUntilNextNonEmptyLine(reader);
 
         while (!reader.finished()) {
             Task task = TaskParser.parse(reader);

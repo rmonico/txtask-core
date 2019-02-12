@@ -14,13 +14,13 @@ import static br.zero.txtask.parser.internal.Constants.TASK_STATUSES_ARRAY;
 
 class TaskStatusParser {
 
-    private static final TaskStatusParser parser = new TaskStatusParser();
+    private static final TaskStatusParser instance = new TaskStatusParser();
 
-    static Status parse(ParserReader reader) throws IOException, ParserException {
-        return parser.internalParse(reader);
+    static TaskStatusParser taskStatusParser() {
+        return instance;
     }
 
-    private Status internalParse(ParserReader reader) throws IOException, ParserException {
+    Status parse(ParserReader reader) throws IOException, ParserException {
         if (!this.matches(reader))
             error("Cant parse task status", reader);
 
@@ -35,7 +35,7 @@ class TaskStatusParser {
         return status;
     }
 
-    private boolean matches(ParserReader reader) throws IOException {
+    boolean matches(ParserReader reader) throws IOException {
         return reader.followed().byAnyOf(TASK_STATUSES_ARRAY).which() > -1;
     }
 

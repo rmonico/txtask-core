@@ -8,15 +8,15 @@ import java.io.IOException;
 import static br.zero.java.StringFormatter.s;
 import static br.zero.txtask.parser.ParserException.error;
 
-public class ListTitleParser {
+class ListTitleParser {
 
     private static final ListTitleParser instance = new ListTitleParser();
 
-    public static String parse(ParserReader reader) throws IOException, ParserException {
-        return instance.internalParse(reader);
+    static ListTitleParser listTitleParser() {
+        return instance;
     }
 
-    private String internalParse(ParserReader reader) throws IOException, ParserException {
+    String parse(ParserReader reader) throws IOException, ParserException {
         if (!this.matches(reader))
             error(s("List title must start with '%s'").format(Constants.LIST_TITLE_PREFIX), reader);
 

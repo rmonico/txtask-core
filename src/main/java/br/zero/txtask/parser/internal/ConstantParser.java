@@ -11,7 +11,13 @@ import static java.lang.System.lineSeparator;
 
 class ConstantParser {
 
-    static void parseUntilNextNonEmptyLine(ParserReader reader) throws IOException, ParserException {
+    private static final ConstantParser instance = new ConstantParser();
+
+    static ConstantParser constantParser() {
+        return instance;
+    }
+
+    void parseUntilNextNonEmptyLine(ParserReader reader) throws IOException, ParserException {
         String lineSeparator = lineSeparator();
 
         while (lineSeparator.equals(reader.get().next(lineSeparator.length()).go())) {
@@ -19,13 +25,7 @@ class ConstantParser {
         }
     }
 
-    static void parse(ParserReader reader, String value) throws IOException, ParserException {
-        ConstantParser parser = new ConstantParser();
-
-        parser.internalParse(reader, value);
-    }
-
-    private void internalParse(ParserReader reader, String value) throws ParserException, IOException {
+    void parse(ParserReader reader, String value) throws ParserException, IOException {
         if (!this.matches(reader, value))
             error(s("Cant parse constant '%s'").format(value), reader);
 
