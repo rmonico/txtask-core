@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static br.zero.txtask.parser.ParserException.error;
+import static br.zero.txtask.parser.internal.CommentParser.commentParser;
 import static br.zero.txtask.parser.internal.ConstantParser.constantParser;
 import static br.zero.txtask.parser.internal.Constants.*;
 import static br.zero.txtask.parser.internal.ListTitleParser.listTitleParser;
@@ -32,6 +33,8 @@ class TaskListParser {
 
         if (reader.finished())
             return taskList;
+
+        commentParser().parse(reader, taskList::setComment, 0);
 
         List<Tag> implicitTags = new ArrayList<>();
 
