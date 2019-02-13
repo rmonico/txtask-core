@@ -18,12 +18,10 @@ x Short comments
   x On regular task
   x On title
   x Indented on subtasks #restriction #future
-  - Append when consecutive comments are found #future
 - Long comments
   - On regular task
   - On title
   - Indented on subtasks #restriction #future
-  - Append when consecutive comments are found #future
 x Task status
 - Tags with value
 ; Initially will allow any value
