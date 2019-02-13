@@ -20,6 +20,10 @@ public class TagMatcherFactory {
         return tagFeature(Tag::getName).description("Tag name").name("name");
     }
 
+    public FunctionalFeatureMatcherFactory<TaskContainer, String> value() {
+        return tagFeature(Tag::getValue).description("Tag value").name("value");
+    }
+
     private <T> FunctionalFeatureMatcherFactory<TaskContainer, T> tagFeature(Function<Tag, T> tagExtractor) {
         return feature((TaskContainer c) -> tagExtractor.apply(extractor.apply(c)));
     }

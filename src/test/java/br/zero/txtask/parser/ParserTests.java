@@ -234,4 +234,15 @@ public class ParserTests {
         assertThat(list, task(0).task(0).title().should(is("Subtask with long comment")));
         assertThat(list, task(0).task(0).comment().should(is("Long comment of subtask\nMore stuff")));
     }
+
+    @Test
+    public void should_tags_have_value() throws FileNotFoundException, ParserException {
+        TaskListParser parser = TaskListParserFactory.create();
+
+        TaskList list = parser.parse(new FileReader("src/test/resources/should_tags_have_value.txk"));
+
+        assertThat(list, task(0).title().should(is("Task with valued tag")));
+        assertThat(list, task(0).tag(0).name().should(is("tag_name")));
+        assertThat(list, task(0).tag(0).value().should(is("value_of_tag")));
+    }
 }
