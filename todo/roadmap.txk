@@ -6,7 +6,7 @@
 ##parser ##v0.1
 x List title
   x Just on first line #restriction #future
-  - Comments of list #future
+  x Comments of list #future
 x Task title
   x Without sharp char #restriction #future
   ; This char: #
@@ -18,10 +18,10 @@ x Short comments
   x On regular task
   x On title
   x Indented on subtasks #restriction #future
-- Long comments
-  - On regular task
-  - On title
-  - Indented on subtasks #restriction #future
+x Long comments
+  x On regular task
+  x On title
+  x Indented on subtasks #restriction #future
 x Task status
 - Tags with value
 ; Initially will allow any value
