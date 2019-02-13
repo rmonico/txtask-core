@@ -231,7 +231,7 @@ public class ParserTests {
         assertThat(list, comment().should(is("List's long comment contents\nSecond line of comment")));
         assertThat(list, task(0).title().should(is("Task with long comment")));
         assertThat(list, task(0).comment().should(is("Long comment on root task contents\nSecond line")));
-        assertThat(list, task(0).task(0).title().should(is("Subtask with long comments")));
+        assertThat(list, task(0).task(0).title().should(is("Subtask with long comment")));
         assertThat(list, task(0).task(0).comment().should(is("Long comment of subtask\nMore stuff")));
     }
 }
