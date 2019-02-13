@@ -12,6 +12,10 @@ public class TaskListMatcherFactory {
         return feature(TaskList::getTitle).description("list's title").name("title");
     }
 
+    public static FunctionalFeatureMatcherFactory<? super TaskList, String> comment() {
+        return feature(TaskList::getComment).description("list title's comment").name("comment");
+    }
+
     public static TaskMatcherFactory task(int index) {
         return new TaskMatcherFactory((TaskContainer container) -> container.getTasks().get(index));
     }

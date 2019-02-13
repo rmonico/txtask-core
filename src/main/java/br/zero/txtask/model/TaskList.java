@@ -7,6 +7,7 @@ public class TaskList implements TaskContainer {
 
     private String title;
     private List<Task> tasks;
+    private String comment;
 
     public TaskList() {
         this.tasks = new ArrayList<>();
@@ -23,5 +24,13 @@ public class TaskList implements TaskContainer {
     @Override
     public List<Task> getTasks() {
         return tasks;
+    }
+
+    public String getComment() {
+        return this.comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
