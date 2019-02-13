@@ -1,0 +1,16 @@
+:: List with long comment
+;;
+List's long comment contents
+Second line of comment
+;;
+
+- Task with long comment
+;;
+Long comment on root task contents
+Second line
+;;
+  - Subtask with long comment
+  ;;
+  Long comment of subtask
+  More stuff
+  ;;

@@ -220,4 +220,18 @@ public class ParserTests {
         assertThat(list, title().should(is("List with a sigle line comment")));
         assertThat(list, comment().should(is("Contents of list comment")));
     }
+
+    @Test
+    public void should_parse_long_comments() throws FileNotFoundException, ParserException {
+        TaskListParser parser = TaskListParserFactory.create();
+
+        TaskList list = parser.parse(new FileReader("src/test/resources/should_parse_long_comments.txk"));
+
+        assertThat(list, title().should(is("List with long comment")));
+        assertThat(list, comment().should(is("List's long comment contents\nSecond line of comment")));
+        assertThat(list, task(0).title().should(is("Task with long comment")));
+        assertThat(list, task(0).comment().should(is("Long comment on root task contents\nSecond line")));
+        assertThat(list, task(0).task(0).title().should(is("Subtask with long comments")));
+        assertThat(list, task(0).task(0).comment().should(is("Long comment of subtask\nMore stuff")));
+    }
 }
