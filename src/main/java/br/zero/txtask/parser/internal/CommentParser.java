@@ -5,8 +5,9 @@ import br.zero.txtask.parser.reader.ParserReader;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-import static br.zero.txtask.parser.internal.Constants.SINGLE_LINE_COMMENT_MARK;
+import static br.zero.txtask.parser.internal.LongCommentParser.longCommentParser;
 import static br.zero.txtask.parser.internal.ParserUtilities.identString;
+import static br.zero.txtask.parser.internal.ShortCommentParser.shortCommentParser;
 
 class CommentParser {
 
@@ -17,19 +18,12 @@ class CommentParser {
     }
 
     void parse(ParserReader reader, Consumer<String> consumer, int identLevel) throws IOException {
-        String markString = identString(identLevel) + SINGLE_LINE_COMMENT_MARK;
+        String identString = identString(identLevel);
 
-        if (!this.matches(reader, markString))
-            return;
-
-        reader.consume().next(markString.length()).go();
-
-        String commentContents = reader.consume().eol().go();
-
-        consumer.accept(commentContents);
+        if (shortCommentParser().matches(reader, identString))
+            shortCommentParser().parse(reader, consumer, identString);
+        else if (longCommentParser().matches(reader, identString))
+            longCommentParser().parse(reader, consumer, identString);
     }
 
-    private boolean matches(ParserReader reader, String markString) throws IOException {
-        return reader.followed().by(markString).go();
-    }
 }

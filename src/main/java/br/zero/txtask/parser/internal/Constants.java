@@ -10,11 +10,13 @@ import static br.zero.txtask.model.Status.OPEN;
 
 public class Constants {
 
-    static final String SINGLE_LINE_COMMENT_MARK = "; ";
     static final String LIST_TITLE_PREFIX = ":: ";
 
     static final Map<Status, String> TASK_STATUSES = MapBuilder.create(Status.class, String.class).hashMap().put(OPEN, "- ").put(DONE, "x ").done();
     static final String[] TASK_STATUSES_ARRAY = TASK_STATUSES.values().toArray(new String[]{});
+
+    static final String SHORT_COMMENT_MARK = "; ";
+    static final String LONG_COMMENT_MARK = ";;";
 
     public static final String TAG_MARK = "#";
     static final String IMPLICIT_TAG_INSERTION_MARK = "##";
