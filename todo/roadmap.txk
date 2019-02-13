@@ -14,10 +14,10 @@ x Task tag
   x Allow regex "[a-z_][a-z0-9_\.]*" #restriction #future
 x Implicit tags
 x Subtasks
-- Short comments
-  - On regular task
-  - On title
-  - Indented on subtasks #restriction #future
+x Short comments
+  x On regular task
+  x On title
+  x Indented on subtasks #restriction #future
   - Append when consecutive comments are found #future
 - Long comments
   - On regular task

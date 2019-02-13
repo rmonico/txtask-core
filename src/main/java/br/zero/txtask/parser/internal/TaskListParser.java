@@ -12,11 +12,11 @@ import java.util.List;
 import static br.zero.txtask.parser.ParserException.error;
 import static br.zero.txtask.parser.internal.CommentParser.commentParser;
 import static br.zero.txtask.parser.internal.ConstantParser.constantParser;
-import static br.zero.txtask.parser.internal.Constants.*;
+import static br.zero.txtask.parser.internal.Constants.IMPLICIT_TAG_INSERTION_MARK;
+import static br.zero.txtask.parser.internal.Constants.IMPLICIT_TAG_REMOVAL_MARK;
 import static br.zero.txtask.parser.internal.ListTitleParser.listTitleParser;
 import static br.zero.txtask.parser.internal.TagsParser.tagsParser;
 import static br.zero.txtask.parser.internal.TaskParser.taskParser;
-import static java.lang.System.lineSeparator;
 
 class TaskListParser {
 
