@@ -1,0 +1,4 @@
+:: Title
+
+- All characters valid in tag values #tag:abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/_.,
+- Tag value with invalid characters #tag:abc&&def

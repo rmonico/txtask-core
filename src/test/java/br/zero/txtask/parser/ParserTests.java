@@ -245,4 +245,13 @@ public class ParserTests {
         assertThat(list, task(0).tag(0).name().should(is("tag_name")));
         assertThat(list, task(0).tag(0).value().should(is("value_of_tag")));
     }
+
+    @Test
+    public void should_tag_values_contain_only_valid_chars() {
+        TaskListParser parser = TaskListParserFactory.create();
+
+        ParserException exception = assertThrows(ParserException.class, () -> parser.parse(new FileReader("src/test/resources/should_tag_values_contain_only_valid_chars.txk")));
+
+        assertThat(exception.getMessage(), is("Tag value can contain only a-z, A-Z, 0-9 '/_.,' chars"));
+    }
 }
