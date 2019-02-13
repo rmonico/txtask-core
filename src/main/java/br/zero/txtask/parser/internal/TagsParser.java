@@ -7,6 +7,8 @@ import br.zero.txtask.parser.reader.ParserReader;
 import java.io.IOException;
 import java.util.function.Consumer;
 
+import static br.zero.txtask.parser.internal.Constants.TAG_VALUE_SEPARATOR;
+
 class TagsParser {
 
     private static TagsParser instance = new TagsParser();
@@ -23,9 +25,17 @@ class TagsParser {
 
             Tag tag = new Tag();
 
-            String tagName = reader.consume().until(" ").or().eol().go();
+            String tagName = reader.consume().until(" ").or().until(TAG_VALUE_SEPARATOR).eol().go();
 
             validateTagName(tagName);
+
+            if (reader.followed().by(TAG_VALUE_SEPARATOR).go()) {
+                reader.consume().next(TAG_VALUE_SEPARATOR.length()).go();
+
+                String tagValue = reader.consume().until(" ").or().eol().go();
+
+                tag.setValue(tagValue);
+            }
 
             reader.consume().until(prefix).or().eol().go();
 

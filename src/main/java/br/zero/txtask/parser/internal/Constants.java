@@ -22,5 +22,7 @@ public class Constants {
     static final String IMPLICIT_TAG_INSERTION_MARK = "##";
     static final String IMPLICIT_TAG_REMOVAL_MARK = "==";
 
+    static final String TAG_VALUE_SEPARATOR = ":";
+
     static final String SUB_TASK_IDENT = "  ";
 }
