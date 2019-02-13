@@ -1,8 +1,6 @@
-package br.zero.txtask.parser.internal;
+package br.zero.txtask.parser;
 
 import br.zero.txtask.model.TaskList;
-import br.zero.txtask.parser.ParserException;
-import br.zero.txtask.parser.TaskListParser;
 import br.zero.txtask.parser.reader.ParserReader;
 
 import java.io.IOException;

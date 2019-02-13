@@ -18,15 +18,15 @@ import static br.zero.txtask.parser.internal.ListTitleParser.listTitleParser;
 import static br.zero.txtask.parser.internal.TagsParser.tagsParser;
 import static br.zero.txtask.parser.internal.TaskParser.taskParser;
 
-class TaskListParser {
+public class TaskListParser {
 
     private static final TaskListParser instance = new TaskListParser();
 
-    static TaskListParser listParser() {
+    public static TaskListParser listParser() {
         return instance;
     }
 
-    TaskList parse(ParserReader reader) throws IOException, ParserException {
+    public TaskList parse(ParserReader reader) throws IOException, ParserException {
         TaskList taskList = new TaskList();
 
         taskList.setTitle(listTitleParser().parse(reader));
