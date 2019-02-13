@@ -23,7 +23,7 @@ x Long comments
   x On title
   x Indented on subtasks #restriction #future
 x Task status
-- Tags with value
+x Tags with value
 ; Initially will allow any value
 
 ##parser ##future
@@ -43,7 +43,6 @@ x Task status
   - With default of "no value"
 
 - Should tags have more than one value?
-- 
 
 ##linter ##discussion
 - Not started yet, low priority
