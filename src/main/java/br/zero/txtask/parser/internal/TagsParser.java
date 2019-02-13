@@ -12,8 +12,9 @@ import static br.zero.txtask.parser.internal.Constants.TAG_VALUE_SEPARATOR;
 class TagsParser {
 
     private static TagsParser instance = new TagsParser();
-    private static final String VALID_CHARS = "0123456789abcdefghijklmnopqrstuvwxyz_.";
-    private static final String VALID_FIRST_CHAR = "abcdefghijklmnopqrstuvwxyz_.";
+    private static final String TAG_NAME_VALID_CHARS = "0123456789abcdefghijklmnopqrstuvwxyz_.";
+    private static final String TAG_NAME_VALID_FIRST_CHAR = "abcdefghijklmnopqrstuvwxyz_.";
+    private static final String TAG_VALUE_VALID_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/_.,";
 
     static TagsParser tagsParser() {
         return instance;
@@ -34,6 +35,8 @@ class TagsParser {
 
                 String tagValue = reader.consume().until(" ").or().eol().go();
 
+                validateTagValue(tagValue);
+
                 tag.setValue(tagValue);
             }
 
@@ -46,25 +49,35 @@ class TagsParser {
 
     }
 
+    private void validateTagValue(String tagValue) throws ParserException {
+        for (int ch : tagValue.toCharArray())
+            this.validateTagValueChar(ch);
+    }
+
+    private void validateTagValueChar(int ch) throws ParserException {
+        if (TAG_VALUE_VALID_CHARS.indexOf(ch) == -1)
+            throw new ParserException("Tag value can contain only a-z, A-Z, 0-9 '/_.,' chars");
+    }
+
     private void validateTagName(String tagName) throws ParserException {
         char[] charArray = tagName.toCharArray();
 
         for (int ch : charArray)
-            this.validateChar(ch);
+            this.validateTagNameChar(ch);
 
-        validateFirstChar(charArray[0]);
+        validateTagNameFirstChar(charArray[0]);
     }
 
-    private void validateChar(int ch) throws ParserException {
+    private void validateTagNameChar(int ch) throws ParserException {
         if (Character.isUpperCase(ch))
             throw new ParserException("Tags cant have uppercase letters");
 
-        if (VALID_CHARS.indexOf(ch) == -1)
+        if (TAG_NAME_VALID_CHARS.indexOf(ch) == -1)
             throw new ParserException("Tags can have only a-z, 0-9 or _ characters");
     }
 
-    private void validateFirstChar(char ch) throws ParserException {
-        if (VALID_FIRST_CHAR.indexOf(ch) == -1)
+    private void validateTagNameFirstChar(char ch) throws ParserException {
+        if (TAG_NAME_VALID_FIRST_CHAR.indexOf(ch) == -1)
             throw new ParserException("Tags must start with a-z, or _ characters");
     }
 
