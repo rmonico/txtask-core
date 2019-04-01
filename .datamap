@@ -1,0 +1,6 @@
+description="txtask-core"
+category=repos.todo
+synchronizer=git
+remote=https://github.com/rmonico/txtask-core
+public=yes
+disable_bookmark=yes
