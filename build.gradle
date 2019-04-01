@@ -1,5 +1,15 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+}
+
 plugins {
-    id 'java'
+    id 'com.jfrog.bintray' version '1.8.4'
+    id 'maven-publish'
+    id 'java-library'
     id 'application'
     id 'eclipse'
     id 'idea'
@@ -9,6 +19,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
+    mavenLocal()
+    mavenCentral()
     jcenter()
 }
 
@@ -31,3 +43,88 @@ test {
 wrapper {
     gradleVersion = '4.8'
 }
+
+// Add support to building a separate jar for docs
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+javadoc.failOnError = false
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name "GNU General Public License version 3"
+            url "https://opensource.org/licenses/GPL-3.0"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "rmonico"
+            name "Rafael Monico"
+            email "rmonico1@gmail.com"
+        }
+    }
+
+    scm {
+        url "https://github.com/rmonico/txtask-core"
+    }
+}
+
+publishing {
+    publications {
+        mavenPublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar {
+                classifier "sources"
+            }
+            artifact javadocJar {
+                classifier "javadoc"
+            }
+            groupId 'br.zero.txtask'
+            artifactId 'txtask-core'
+            version '0.0.1'
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'TXTask task list core module.')
+                root.appendNode('name', 'TXTask-core')
+                root.appendNode('url', 'https://github.com/rmonico/txtask-core')
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+bintray {
+    user = System.getProperty('bintray.user')
+    key = System.getProperty('bintray.key')
+    publications = ['mavenPublication']
+
+    pkg {
+        repo = 'TXTask'
+        name = 'TXTask-Core'
+        userOrg = 'rmonico'
+        licenses = ['GPL-3.0']
+        vcsUrl = 'https://github.com/rmonico/txtask-core'
+        version {
+            name = '0.0.1'
+            desc = '0.0.1'
+            released  = new Date()
+        }
+    }
+
+}
+
+version = '0.0.1'
